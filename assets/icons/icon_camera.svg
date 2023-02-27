@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="43.45" height="36.095" viewBox="0 0 43.45 36.095">
+  <g id="camera" transform="translate(1.5 1.5)">
+    <path id="Shape" d="M40.45,29.418A3.677,3.677,0,0,1,36.773,33.1H3.677A3.677,3.677,0,0,1,0,29.418V9.193A3.677,3.677,0,0,1,3.677,5.516h7.355L14.709,0H25.741l3.677,5.516h7.355A3.677,3.677,0,0,1,40.45,9.193Z" transform="translate(0)" fill="none" stroke="#a2a2a2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="3"/>
+    <circle id="Oval" cx="7.355" cy="7.355" r="7.355" transform="translate(12.87 11.032)" fill="none" stroke="#a2a2a2" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="2"/>
+  </g>
+</svg>
