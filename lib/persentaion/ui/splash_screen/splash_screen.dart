@@ -5,9 +5,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:limousine_driver/core/helpers/functions.dart';
 
 import '../../../core/styles/colors.dart';
-import '../../../core/utlis/strings.dart';
-
-import '../../../core/widgets/texts.dart';
 import '../../controller/app_cubit/cubit/app_cubit.dart';
 
 class SplashScreen extends StatefulWidget {

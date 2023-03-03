@@ -1,6 +1,6 @@
 class ApiConstants {
   // static const baseUrl ="";
-  static const baseUrl = "https://c0b0-197-38-53-207.eu.ngrok.io";
+  static const baseUrl = "https://3080-197-38-53-207.eu.ngrok.io";
   static const baseUrlImages = "$baseUrl/images/";
   static const checkUserPath = "$baseUrl/check-username";
   static const loginPath = "$baseUrl/user-login";
@@ -17,6 +17,8 @@ class ApiConstants {
 
       static const changeStatusTripPath =
       "$baseUrl/trips/change_status_trip";
+  static const updateDeviceTokenPath =
+      "$baseUrl/update-device-token";
 
   static const getCityDetailsPath = "$baseUrl/cities/get-city-details?";
   static const getPlaceDetailsPath = "$baseUrl/places/get-placeDetails?";

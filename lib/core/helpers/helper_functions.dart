@@ -1,4 +1,8 @@
+import 'dart:io';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:limousine_driver/core/utlis/app_model.dart';
 
 pushPage(context, page) {
   Navigator.push(
@@ -35,3 +39,37 @@ SizedBox sizedHeight(double height) => SizedBox(
 SizedBox sizedWidth(double width) => SizedBox(
       width: width,
     );
+
+FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
+void firebaseCloudMessaging_Listeners() {
+
+  if (Platform.isIOS) {
+    _firebaseMessaging.requestPermission(
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
+  }
+
+  _firebaseMessaging.getToken().then((token){
+    AppModel.deviceToken=token!;
+    print(AppModel.deviceToken);
+  });
+
+
+}
+
+// void iOS_Permission() {
+//   _firebaseMessaging.requestPermission(
+//       IosNotificationSettings(sound: true, badge: true, alert: true)
+//   );
+//   _firebaseMessaging.io
+//       .listen((IosNotificationSettings settings)
+//   {
+//     print("Settings registered: $settings");
+//   });
+// }

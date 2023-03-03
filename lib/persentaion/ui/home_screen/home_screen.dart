@@ -2,23 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_phoenix/generated/i18n.dart';
+
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:limousine_driver/core/helpers/functions.dart';
-import 'package:limousine_driver/core/helpers/helper_functions.dart';
+
 import 'package:limousine_driver/core/styles/colors.dart';
 import 'package:limousine_driver/core/utlis/app_model.dart';
 import 'package:limousine_driver/core/utlis/enums.dart';
-import 'package:limousine_driver/core/widgets/button_widget.dart';
-import 'package:limousine_driver/core/widgets/circle_image_widget.dart';
+
 import 'package:limousine_driver/core/widgets/loading_widget.dart';
 import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
 import '../../../core/utlis/strings.dart';
-import '../../../core/widgets/app_bar_widget.dart';
-import '../../../core/widgets/texts.dart';
+
 import 'components/app_bar_home.dart';
-import 'components/container_tab_widget.dart';
+
 import 'components/details_user_widget.dart';
 import 'components/drawer_widget.dart';
 import 'components/item_current_trip.dart';
@@ -45,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    // TripCubit.get(context).getAddressLabel(lat: locData.latitude ?? 0.0,lng: locData.longitude ?? 0.0,);
+    TripCubit.get(context).updateDeviceToken(userId: currentUser.id,token: AppModel.deviceToken);
     TripCubit.get(context).homeTrip(
         userId: currentUser.id!,
         lat: locData.latitude ?? 0.0,
@@ -100,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         zoom: 14.0,
                       ),
                     ),
-                    state.responseHome!.trip != null ||
-                            state.responseHome!.trip!.status != 7
+                    state.responseHome!.trip != null &&
+                            state.responseHome!.trip!.status != 6
                         ? Align(
                             alignment: Alignment.bottomCenter,
                             child: Container(

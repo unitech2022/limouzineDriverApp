@@ -59,4 +59,22 @@ class TripCubit extends Cubit<TripState> {
       emit(state.copyWith(changeStatusTrip: RequestState.error));
     }
   }
+// Todo : refactor
+  updateDeviceToken({userId,token})async{
+
+    emit(state.copyWith(updateDeviceTokenState: RequestState.loading));
+    // var headers = {'Authorization': currentUser.token!};
+    var request = http.MultipartRequest(
+        'POST', Uri.parse(ApiConstants.updateDeviceTokenPath));
+    request.fields.addAll({'userId': currentUser.id!, 'token': token});
+    // request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    // print("updateDeviceToken = : -" + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      emit(state.copyWith(updateDeviceTokenState: RequestState.loaded));
+    } else {
+      // print("updateDeviceToken = : -" + response.reasonPhrase.toString());
+      emit(state.copyWith(updateDeviceTokenState: RequestState.error));
+    }
+  }
 }

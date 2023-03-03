@@ -19,9 +19,9 @@ class TripRemoteDataSource extends BaseTripRemoteDataSource {
   
   @override
   Future<ResponseHome> homeDriver({userId,lat,lng,address}) async{
-      var request =
-        http.MultipartRequest('GET', Uri.parse("${ApiConstants.homeDriverPath}userId=$userId&lat=$lat&Lang=$lng&address=$address"));
-  
+
+
+    var request = http.Request('GET', Uri.parse("${ApiConstants.homeDriverPath}userId=$userId&lat=${lat.toString()}&Lang=${lng.toString()}&address=$address"));
 
     http.StreamedResponse response = await request.send();
 

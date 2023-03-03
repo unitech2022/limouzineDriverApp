@@ -4,6 +4,7 @@ class TripState extends Equatable {
   final ResponseHome? responseHome;
   final RequestState? homeState;
   final RequestState? changeStatusTrip;
+  final RequestState? updateDeviceTokenState;
 
 
 
@@ -12,7 +13,7 @@ class TripState extends Equatable {
       {
       this.homeState,
       this.responseHome,
-      this.changeStatusTrip
+      this.changeStatusTrip,this.updateDeviceTokenState
      });
 
   TripState copyWith(
@@ -20,18 +21,20 @@ class TripState extends Equatable {
           final statues,
           final ResponseHome? responseHome,
           final RequestState? homeState,
-           final RequestState? changeStatusTrip
+           final RequestState? changeStatusTrip,
+            final RequestState? updateDeviceTokenState
         }) =>
       TripState(
           homeState: homeState ?? this.homeState,
           responseHome: responseHome ?? this.responseHome,
-          changeStatusTrip: changeStatusTrip??this.changeStatusTrip
+          changeStatusTrip: changeStatusTrip??this.changeStatusTrip,
+          updateDeviceTokenState: updateDeviceTokenState??this.updateDeviceTokenState
          );
 
   @override
   List<Object?> get props => [
       
         homeState,
-        responseHome,changeStatusTrip
+        responseHome,changeStatusTrip,updateDeviceTokenState
       ];
 }

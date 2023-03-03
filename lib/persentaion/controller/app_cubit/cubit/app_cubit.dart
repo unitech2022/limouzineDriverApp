@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/helpers/functions.dart';
+import '../../../../core/helpers/helper_functions.dart';
 import '../../../../core/routers/routers.dart';
 import '../../../../core/utlis/api_constatns.dart';
 import '../../../../core/utlis/app_model.dart';
@@ -32,7 +33,8 @@ class AppCubit extends Cubit<AppState> {
   }
   getPage(context) {
     Future.delayed(const Duration(seconds: 3), () {
-      print(AppModel.lang);
+      // print(AppModel.lang);
+      firebaseCloudMessaging_Listeners();
       if (AppModel.lang == "") {
         Navigator.pushReplacementNamed(context, lang);
       }
