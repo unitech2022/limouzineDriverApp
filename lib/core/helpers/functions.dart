@@ -34,7 +34,7 @@ replacePage({context, page}) {
 
 late String currentLocation="";
 LocationData locData = LocationData.fromMap({});
-getLocation() async {
+Future getLocation() async {
   Location location =  Location();
   bool serviceEnabled;
   PermissionStatus permissionGranted;

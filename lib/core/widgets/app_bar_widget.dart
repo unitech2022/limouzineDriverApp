@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:limousine_driver/core/widgets/icon_button_back.dart';
 import 'package:limousine_driver/core/widgets/texts.dart';
 
+import '../helpers/functions.dart';
 import '../helpers/helper_functions.dart';
 
 class AppBarWidget extends StatelessWidget {

@@ -37,11 +37,11 @@ class UserDetail {
     profileImage = json['profileImage'];
     role = json['role'];
     deviceToken = json['deviceToken'];
-    status = json['status'];
+    status = json['status'].toString();
     code = json['code'];
   
-    points = json['points'];
-    surveysBalance = json['surveysBalance'];
+    points = json['points'].toString();
+    surveysBalance = json['surveysBalance'].toString();
     createdAt = json['createdAt'];
   }
 

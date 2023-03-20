@@ -7,6 +7,7 @@ import 'package:limousine_driver/domin/repository/trip_base_repository.dart';
 import 'package:limousine_driver/domin/usese_cases/driver_uses_cases/add_driver_use_case.dart';
 import 'package:limousine_driver/domin/usese_cases/trip_uses_cases/home_trip_use_case.dart';
 import 'package:limousine_driver/persentaion/controller/driver_cubit/driver_cubit.dart';
+import 'package:limousine_driver/persentaion/controller/notifictions_cubit/cubit/notifications_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
 
 import '../../data/data_source/remote_data_source/app_remote_data_source.dart';
@@ -38,7 +39,7 @@ class ServicesLocator {
     sl.registerFactory(() => AuthCubit(sl(), sl(), sl(), sl()));
     sl.registerFactory(() => DriverCubit(sl(), sl()));
     sl.registerFactory(() => TripCubit(sl()));
-    // sl.registerFactory(() => PlaceCubit(sl()));
+    sl.registerFactory(() => NotificationsCubit());
 
     //    sl.registerFactory(() => SearchCubit(sl()));
 

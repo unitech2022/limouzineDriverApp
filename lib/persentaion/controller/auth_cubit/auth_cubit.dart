@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,8 +6,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:limousine_driver/persentaion/ui/sign_up_screen/register_screen/register_screen.dart';
 
 import '../../../core/helpers/functions.dart';
+import '../../../core/utlis/api_constatns.dart';
 import '../../../core/utlis/app_model.dart';
 import '../../../core/utlis/enums.dart';
+import '../../../data/models/user_response.dart';
 import '../../../domin/entities/response_login.dart';
 import '../../../domin/entities/response_signup.dart';
 import '../../../domin/entities/user.dart';
@@ -17,7 +20,7 @@ import '../../../domin/usese_cases/auth_uses_cases/signup_usecase.dart';
 import '../../ui/home_screen/home_screen.dart';
 import '../../ui/sign_up_screen/steps_sign_screens/create_account_driver_screen.dart';
 import '../../ui/sign_up_screen/steps_sign_screens/otp_screen/otp_screen.dart';
-
+import 'package:http/http.dart' as http;
 
 
 part 'auth_state.dart';
@@ -131,4 +134,69 @@ class AuthCubit extends Cubit<AuthState> {
 
 
   }
+
+
+  /// refactor code
+  UserDetail? userDetail;
+  Future getUserDetails() async {
+    emit(state.copyWith(getUserState: RequestState.loading));
+    print(currentUser.token);
+    var headers = {'Authorization': currentUser.token!};
+    var request =
+        http.MultipartRequest('POST', Uri.parse(ApiConstants.getUserPath));
+    request.fields.addAll({'userId': currentUser.id!});
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+    print(response.statusCode.toString() + "getUserDetails");
+    if (response.statusCode == 200) {
+      String jsonsDataString = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonsDataString);
+      userDetail = UserDetail.fromJson(jsonData);
+      currentUser.email = userDetail!.email;
+      currentUser.fullName = userDetail!.fullName;
+      currentUser.profileImage = userDetail!.profileImage;
+      currentUser.deviceToken = userDetail!.deviceToken;
+      emit(state.copyWith(
+          getUserState: RequestState.loaded, getUserDetails: userDetail));
+    } else {
+      print(response.reasonPhrase);
+      emit(state.copyWith(getUserState: RequestState.error));
+    }
+  }
+
+ Future updateUser({fullName, email, image}) async {
+    emit(state.copyWith(updateUserState: RequestState.loading));
+    var headers = {'Authorization': currentUser.token!};
+
+    var request =
+        http.MultipartRequest('POST', Uri.parse(ApiConstants.updateUserPath));
+    request.fields.addAll({
+      'userId': currentUser.id!,
+      'FullName': fullName,
+      'Email': email,
+      'image': image
+    });
+
+    request.headers.addAll(headers);
+
+    http.StreamedResponse response = await request.send();
+
+    print(response.statusCode.toString() + "updateUser");
+    if (response.statusCode == 200) {
+      String jsonsDataString = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonsDataString);
+      UserDetail userDetail = UserDetail.fromJson(jsonData);
+      // currentUser = userDetail as UserDetailsPref;
+      emit(state.copyWith(
+          updateUserState: RequestState.loaded, getUserDetails: userDetail));
+      getUserDetails();
+    } else {
+      print(response.reasonPhrase);
+      emit(state.copyWith(updateUserState: RequestState.error));
+    }
+  }
+
+
 }

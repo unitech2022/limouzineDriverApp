@@ -4,8 +4,11 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:limousine_driver/core/helpers/helper_functions.dart';
 import 'package:limousine_driver/core/styles/colors.dart';
+import 'package:limousine_driver/core/utlis/api_constatns.dart';
+import 'package:limousine_driver/core/utlis/app_model.dart';
 import 'package:limousine_driver/core/utlis/strings.dart';
 import 'package:limousine_driver/core/widgets/circle_image_widget.dart';
+import 'package:limousine_driver/persentaion/ui/update_official_documents/update_offical_decuments.dart';
 
 import '../../../core/routers/routers.dart';
 import '../../../core/widgets/buttons.dart';
@@ -51,13 +54,13 @@ class AccountScreen extends StatelessWidget {
                   child: CircleImageWidget(
                       height: 120,
                       width: 120,
-                      image: "assets/images/person.png"),
+                      image: ApiConstants.imageUrl(currentUser.profileImage!)),
                 ),
               ],
             ),
             sizedHeight(25),
             Texts(
-                title: "فواز البالاوي",
+                title: currentUser.fullName!,
                 textColor: Colors.black,
                 fontSize: 20,
                 family: "alex_bold",
@@ -65,7 +68,7 @@ class AccountScreen extends StatelessWidget {
                 align: TextAlign.start),
             sizedHeight(11),
             Texts(
-                title: "fawazalbaalwi@gmail.com",
+                title: currentUser.email!,
                 textColor: Colors.black,
                 fontSize: 12,
                 weight: FontWeight.normal,
@@ -102,7 +105,9 @@ class AccountScreen extends StatelessWidget {
             sizedHeight(23),
             RowItemProfile(
               textColor: Colors.black,
-              onTap: () {},
+              onTap: () {
+                pushPage(context, UpdateOfficialDocuments());
+              },
               color: Color(0xff0B2957),
               icon: "assets/icons/acount.svg",
               title: Strings.myData,
@@ -156,36 +161,39 @@ class RowItemProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          height: 24,
-          width: 24,
-          padding: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8), color: Color(0xffEAEAEA)),
-          child: SvgPicture.asset(icon, color: color),
-        ),
-        sizedWidth(22),
-        Expanded(
-          child: Texts(
-              title: title,
-              textColor: textColor,
-              fontSize: 16,
-              weight: FontWeight.normal,
-              align: TextAlign.start),
-        ),
-        Container(
+    return GestureDetector(
+      onTap:onTap,
+      child: Row(
+        children: [
+          Container(
             height: 24,
             width: 24,
-            alignment: Alignment.center,
-            decoration:
-                BoxDecoration(shape: BoxShape.circle, color: Color(0xffEAEAEA)),
-            child: Icon(
-              Icons.keyboard_arrow_left,
-              color: Color(0xff0B2957),
-            )),
-      ],
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8), color: Color(0xffEAEAEA)),
+            child: SvgPicture.asset(icon, color: color),
+          ),
+          sizedWidth(22),
+          Expanded(
+            child: Texts(
+                title: title,
+                textColor: textColor,
+                fontSize: 16,
+                weight: FontWeight.normal,
+                align: TextAlign.start),
+          ),
+          Container(
+              height: 24,
+              width: 24,
+              alignment: Alignment.center,
+              decoration:
+                  BoxDecoration(shape: BoxShape.circle, color: Color(0xffEAEAEA)),
+              child: Icon(
+                Icons.keyboard_arrow_left,
+                color: Color(0xff0B2957),
+              )),
+        ],
+      ),
     );
   }
 }

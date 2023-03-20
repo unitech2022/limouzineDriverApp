@@ -1,8 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:limousine_driver/core/helpers/functions.dart';
+import 'package:limousine_driver/core/utlis/api_constatns.dart';
+import 'package:limousine_driver/core/utlis/app_model.dart';
 import 'package:limousine_driver/core/widgets/circle_image_widget.dart';
 import 'package:limousine_driver/core/widgets/container.divider.dart';
+import 'package:limousine_driver/domin/entities/driver.dart';
+import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
 
 import '../../../../core/helpers/helper_functions.dart';
 import '../../../../core/routers/routers.dart';
@@ -14,7 +20,10 @@ import 'item_menu.dart';
 
 class DrawerWidget extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
-  const DrawerWidget({super.key, required this.scaffoldKey});
+  Driver? driver;
+  bool? activeDriver;
+  DrawerWidget(
+      {super.key, required this.scaffoldKey, this.driver, this.activeDriver});
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +31,12 @@ class DrawerWidget extends StatelessWidget {
       alignment: Alignment.centerRight,
       padding: const EdgeInsets.only(left: 24, right: 24, top: 38),
       width: widthScreen(context) - 70,
-      decoration: const BoxDecoration(
+      decoration:  BoxDecoration(
         borderRadius: BorderRadius.only(
-          topRight: Radius.circular(80),
-          bottomRight: Radius.circular(80),
+          topRight: AppModel.lang == "ar" ? Radius.circular(0) : Radius.circular(80),
+          bottomRight: AppModel.lang == "ar" ? Radius.circular(0) : Radius.circular(80),
+          topLeft: AppModel.lang == "en" ? Radius.circular(0) : Radius.circular(80),
+          bottomLeft: AppModel.lang == "en" ? Radius.circular(0) : Radius.circular(80),
         ),
         color: Color(0xff0B1B2F),
       ),
@@ -35,7 +46,7 @@ class DrawerWidget extends StatelessWidget {
           children: [
             GestureDetector(
               onTap: () {
-                scaffoldKey.currentState!.closeEndDrawer();
+                scaffoldKey.currentState!.closeDrawer();
               },
               child: Container(
                 height: 36,
@@ -44,7 +55,7 @@ class DrawerWidget extends StatelessWidget {
                     shape: BoxShape.circle,
                     color: Color.fromARGB(42, 255, 255, 255)),
                 child: const Icon(
-                  Icons.arrow_forward,
+                  Icons.arrow_back,
                   color: Colors.white,
                 ),
               ),
@@ -69,7 +80,8 @@ class DrawerWidget extends StatelessWidget {
                     child: CircleImageWidget(
                         height: 90,
                         width: 90,
-                        image: "assets/images/person.png"),
+                        image:
+                            ApiConstants.imageUrl(currentUser.profileImage!)),
                   ),
                   Positioned(
                       left: 5,
@@ -110,7 +122,7 @@ class DrawerWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Texts(
-                    title: "فواز البالاوي",
+                    title: currentUser.fullName!,
                     textColor: Colors.white,
                     fontSize: 20,
                     weight: FontWeight.normal,
@@ -133,7 +145,9 @@ class DrawerWidget extends StatelessWidget {
                         weight: FontWeight.normal,
                         align: TextAlign.start),
                     Texts(
-                        title: " انلاين",
+                        title: TripCubit.get(context).statusDriver
+                            ? " انلاين"
+                            : " اوفلاين",
                         textColor: Color.fromARGB(255, 19, 224, 60),
                         fontSize: 10,
                         weight: FontWeight.normal,
@@ -145,8 +159,17 @@ class DrawerWidget extends StatelessWidget {
                         activeColor: Color(0xff88D55F),
                         thumbColor: Colors.white,
                         trackColor: Color.fromARGB(255, 148, 150, 149),
-                        onChanged: (value) {},
-                        value: true,
+                        onChanged: (value) {
+                          if (activeDriver!) {
+                            pop(context);
+                            showSnakeBar(
+                                context: context, message: Strings.isActive);
+                          } else {
+                            TripCubit.get(context).changeStatusDriver(
+                                driverId: driver!.id, status: value ? 1 : 0);
+                          }
+                        },
+                        value: TripCubit.get(context).statusDriver,
                       ),
                     )
                   ],
@@ -225,19 +248,55 @@ class DrawerWidget extends StatelessWidget {
           },
         ),
         sizedHeight(25),
+         ItemMenu(
+          text: Strings.lang.tr(),
+          icon: "assets/icons/translate.svg",
+          child:  Texts(
+              title:AppModel.lang == "ar"? "العربية":"English",
+              textColor: Color(0xffA5A5A5),
+              fontSize: 16,
+              weight: FontWeight.normal,
+              align: TextAlign.center),
+          onTap: () {
+            showMyDialog(
+                context: context,
+                title: "",
+                body: AppModel.lang == "ar"
+                    ? "تغيير الى اللغة الانجليزية "
+                    : "Translate to Arabic",
+                founction: () async {
+                  if (AppModel.lang == "ar") {
+                    AppModel.lang = "en";
+                    context.setLocale(Locale('en'));
+                    await saveData(ApiConstants.langKey, 'en');
+                    pop(context);
+                    Navigator.pushNamed(context, splash);
+                  } else {
+                    AppModel.lang = "ar";
+                    context.setLocale(Locale('ar'));
+                    await saveData(ApiConstants.langKey, 'ar');
+                    pop(context);
+                    Navigator.pushNamed(context, splash);
+                  }
+                });
+          },
+        ),
+        sizedHeight(25),
         ItemMenu(
           text: Strings.notys,
           icon: "assets/icons/notifications.svg",
-          child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15), color: buttonsColor),
-              child: const Texts(
-                  title: "١٢ جديد",
-                  textColor: Color(0xffA5A5A5),
-                  fontSize: 11,
-                  weight: FontWeight.normal,
-                  align: TextAlign.center)),
+          child:SizedBox(),
+          //  Container(
+          //     padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
+          //     decoration: BoxDecoration(
+          //         borderRadius: BorderRadius.circular(15), color: buttonsColor),
+          //     child: const Texts(
+          //         title: "١٢ جديد",
+          //         textColor: Color(0xffA5A5A5),
+          //         fontSize: 11,
+          //         weight: FontWeight.normal,
+          //         align: TextAlign.center)),
+          
           onTap: () {
             pop(context);
             Navigator.pushNamed(context, notifications);
@@ -258,15 +317,15 @@ class DrawerWidget extends StatelessWidget {
             Navigator.pushNamed(context, history);
           },
         ),
-        sizedHeight(25),
-        ItemMenu(
-          text: Strings.nickNames,
-          icon: "assets/icons/nickname.svg",
-          child: SizedBox(),
-          onTap: () {
-            // Navigator.pushNamed(context, subscription);
-          },
-        ),
+        // sizedHeight(25),
+        // ItemMenu(
+        //   text: Strings.nickNames,
+        //   icon: "assets/icons/nickname.svg",
+        //   child: SizedBox(),
+        //   onTap: () {
+        //     // Navigator.pushNamed(context, subscription);
+        //   },
+        // ),
         sizedHeight(25),
         ItemMenu(
           text: Strings.sittings,

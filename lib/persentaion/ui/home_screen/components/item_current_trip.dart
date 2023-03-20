@@ -152,7 +152,7 @@ class ItemCurrentTrip extends StatelessWidget {
             ),
             onPressed: () {
               TripCubit.get(context)
-                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 1);
+                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 1,userId:responseHome.trip!.userId );
             },
           )),
           sizedWidth(14),
@@ -160,7 +160,7 @@ class ItemCurrentTrip extends StatelessWidget {
               child: Buttons2(
             onPress: () {
                TripCubit.get(context)
-                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 7);
+                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 7,userId:responseHome.trip!.userId );
             },
             radus: 30,
             height: 42,
@@ -192,7 +192,7 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 2);
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 2,userId:responseHome.trip!.userId );
           },
         ),
       );
@@ -213,7 +213,7 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 3);
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 3,userId:responseHome.trip!.userId );
           },
         ),
       );
@@ -234,7 +234,7 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 4);
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 4,userId:responseHome.trip!.userId );
           },
         ),
       );
@@ -255,7 +255,7 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 5);
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 5,userId:responseHome.trip!.userId );
           },
         ),
       );
@@ -276,7 +276,7 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 6);
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 6,userId:responseHome.trip!.userId );
           },
         ),
       );

@@ -1,3 +1,5 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -43,12 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    TripCubit.get(context).updateDeviceToken(userId: currentUser.id,token: AppModel.deviceToken);
+    print(locData.latitude.toString() + "  userId");
+    TripCubit.get(context)
+        .updateDeviceToken(userId: currentUser.id, token: AppModel.deviceToken);
     TripCubit.get(context).homeTrip(
         userId: currentUser.id!,
-        lat: locData.latitude ?? 0.0,
-        lng: locData.longitude ?? 0.0,
+        lat: locData.latitude,
+        lng: locData.longitude,
         address: "currentLocation");
+    getFCMToken();
   }
 
   @override
@@ -62,136 +67,210 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<TripCubit, TripState>(
       builder: (context, state) {
-        return Scaffold(
-            key: _scaffoldKey,
-            endDrawer: DrawerWidget(
-              scaffoldKey: _scaffoldKey,
-            ),
-            appBar: PreferredSize(
-              preferredSize: Size.fromHeight(50.0),
-              child: AppBarHome(
-                title: Strings.main,
-                child: Container(
-                  margin: EdgeInsets.all(12),
-                  height: 16,
-                  width: 26,
-                  child: SvgPicture.asset(
-                    "assets/icons/login.svg",
-                    color: Colors.white,
-                    height: 16,
-                    width: 26,
-                  ),
+        return state.homeState == RequestState.loading
+            ? Scaffold(
+                body: LoadingWidget(height: double.infinity, color: homeColor))
+            : Scaffold(
+                key: _scaffoldKey,
+                drawer: DrawerWidget(
+                  scaffoldKey: _scaffoldKey,
+                  driver: state.responseHome!.driver,
+                  activeDriver: state.responseHome!.trip == null ? false : true,
                 ),
-                onTap: () {
-                  _scaffoldKey.currentState!.openEndDrawer();
-                },
-              ),
-            ),
-            body: state.homeState == RequestState.loading
-                ? LoadingWidget(height: double.infinity, color: homeColor)
-                : Stack(children: [
-                    GoogleMap(
-                      zoomControlsEnabled: false,
-                      onMapCreated: _onMapCreated,
-                      initialCameraPosition: CameraPosition(
-                        target: _center,
-                        zoom: 14.0,
+                appBar: PreferredSize(
+                  preferredSize: Size.fromHeight(50.0),
+                  child: AppBarHome(
+                    title: Strings.main,
+                    child: Container(
+                      margin: EdgeInsets.all(12),
+                      height: 16,
+                      width: 26,
+                      child: SvgPicture.asset(
+                        "assets/icons/login.svg",
+                        color: Colors.white,
+                        height: 16,
+                        width: 26,
                       ),
                     ),
-                    state.responseHome!.trip != null &&
-                            state.responseHome!.trip!.status != 6
-                        ? Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Container(
-                                padding: EdgeInsets.all(24),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.only(
-                                        topLeft: Radius.circular(15),
-                                        topRight: Radius.circular(15))),
-                                child: ItemCurrentTrip(state.responseHome!)),
-                          )
-                        : SizedBox(),
+                    onTap: () {
+                      _scaffoldKey.currentState!.openDrawer();
+                    },
+                  ),
+                ),
+                body: Stack(children: [
+                  GoogleMap(
+                    zoomControlsEnabled: false,
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: CameraPosition(
+                      target: _center,
+                      zoom: 14.0,
+                    ),
+                  ),
+                  state.responseHome!.trip != null &&
+                          state.responseHome!.trip!.status != 7
+                      ? Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Container(
+                              padding: EdgeInsets.all(24),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(15),
+                                      topRight: Radius.circular(15))),
+                              child: ItemCurrentTrip(state.responseHome!)),
+                        )
+                      : SizedBox(),
 
-                    Align(
-                      alignment: Alignment.topCenter,
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 20, left: 24, right: 24),
-                        child: DetailsUserWidget(
-                          userDetail: currentUser,
-                        ),
+                  Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 20, left: 24, right: 24),
+                      child: DetailsUserWidget(
+                        userDetail: currentUser,
                       ),
-                    )
+                    ),
+                  )
 
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    //   children: [
-                    //     Texts(
-                    //         title: Strings.currentOrders,
-                    //         textColor: Color(0xff28436C),
-                    //         fontSize: 23,
-                    //         weight: FontWeight.normal,
-                    //         align: TextAlign.center),
-                    //     Container(
-                    //       padding:
-                    //           EdgeInsets.symmetric(horizontal: 16, vertical: 5),
-                    //       decoration: BoxDecoration(
-                    //           color: buttonsColor,
-                    //           borderRadius: BorderRadius.circular(35)),
-                    //       child: Texts(
-                    //           title: "33",
-                    //           textColor: Colors.white,
-                    //           fontSize: 14,
-                    //           weight: FontWeight.normal,
-                    //           align: TextAlign.center),
-                    //     )
-                    //   ],
-                    // ),
-                    // sizedHeight(18),
-                    // // list Orders
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     Texts(
+                  //         title: Strings.currentOrders,
+                  //         textColor: Color(0xff28436C),
+                  //         fontSize: 23,
+                  //         weight: FontWeight.normal,
+                  //         align: TextAlign.center),
+                  //     Container(
+                  //       padding:
+                  //           EdgeInsets.symmetric(horizontal: 16, vertical: 5),
+                  //       decoration: BoxDecoration(
+                  //           color: buttonsColor,
+                  //           borderRadius: BorderRadius.circular(35)),
+                  //       child: Texts(
+                  //           title: "33",
+                  //           textColor: Colors.white,
+                  //           fontSize: 14,
+                  //           weight: FontWeight.normal,
+                  //           align: TextAlign.center),
+                  //     )
+                  //   ],
+                  // ),
+                  // sizedHeight(18),
+                  // // list Orders
 
-                    // Row(
-                    //   children: [
-                    //     ContainerTabWidget(
-                    //       onTap: () {
-                    //         setState(() {
-                    //           index = Strings.showMap;
-                    //         });
-                    //       },
-                    //       index: index,
-                    //       icon: "assets/icons/map.svg",
-                    //       label: Strings.showMap,
-                    //     ),
-                    //     sizedWidth(20),
-                    //     ContainerTabWidget(
-                    //       onTap: () {
-                    //         setState(() {
-                    //           index = Strings.showList;
-                    //         });
-                    //       },
-                    //       index: index,
-                    //       icon: "assets/icons/list_menu.svg",
-                    //       label: Strings.showList,
-                    //     )
-                    //   ],
-                    // ),
-                    // sizedHeight(11),
-                    //List
+                  // Row(
+                  //   children: [
+                  //     ContainerTabWidget(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           index = Strings.showMap;
+                  //         });
+                  //       },
+                  //       index: index,
+                  //       icon: "assets/icons/map.svg",
+                  //       label: Strings.showMap,
+                  //     ),
+                  //     sizedWidth(20),
+                  //     ContainerTabWidget(
+                  //       onTap: () {
+                  //         setState(() {
+                  //           index = Strings.showList;
+                  //         });
+                  //       },
+                  //       index: index,
+                  //       icon: "assets/icons/list_menu.svg",
+                  //       label: Strings.showList,
+                  //     )
+                  //   ],
+                  // ),
+                  // sizedHeight(11),
+                  //List
 
-                    // index == Strings.showList
-                    //     ? ListCurrentOrders()
-                    //     : SizedBox(
-                    //         height: 300,
-                    //         child: GoogleMap(
-                    //           zoomControlsEnabled: false,
-                    //           onMapCreated: _onMapCreated,
-                    //           initialCameraPosition: CameraPosition(
-                    //             target: _center,
-                    //             zoom: 14.0,
-                    //           ),
-                    //         )),
-                  ]));
+                  // index == Strings.showList
+                  //     ? ListCurrentOrders()
+                  //     : SizedBox(
+                  //         height: 300,
+                  //         child: GoogleMap(
+                  //           zoomControlsEnabled: false,
+                  //           onMapCreated: _onMapCreated,
+                  //           initialCameraPosition: CameraPosition(
+                  //             target: _center,
+                  //             zoom: 14.0,
+                  //           ),
+                  //         )),
+                ]));
       },
     );
+  }
+
+  void getFCMToken() async {
+    FirebaseMessaging.instance.getToken().then((token) {
+      print(token.toString() + "tokrrrrrrn");
+    });
+
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+      RemoteNotification? notification = message.notification;
+      AndroidNotification? android = message.notification?.android;
+
+      // NotifyAowsome(notification!.title!,notification.body!);
+      if (notification != null && android != null && !kIsWeb) {
+        TripCubit.get(context).homeTrip(
+            userId: currentUser.id!,
+            lat: locData.latitude,
+            lng: locData.longitude,
+            address: "currentLocation");
+        // AwesomeNotifications().createNotification(
+        //
+        //     content: NotificationContent(
+        //       id: createUniqueId(),
+        //
+        //       color: homeColor,
+        //       icon: 'resource://drawable/ic_launcher',
+        //
+        //       channelKey: 'key1',
+        //       title:
+        //       '${Emojis.money_money_bag + Emojis.plant_cactus}${notification.title}',
+        //       body: notification.body,
+        //       bigPicture: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+        //       notificationLayout: NotificationLayout.BigPicture,
+        //       // largeIcon: "asset://assets/images/logo_final.png"
+        //     ));
+
+        // AwesomeNotifications().initialize(
+        //     "asset://assets/images/logo_final",
+        //     [
+        //       NotificationChannel(
+        //           channelKey: 'key1',
+        //           channelName: 'chat',
+        //           channelDescription: "Notification example",
+        //           defaultColor: Colors.blue,
+        //           ledColor: Colors.blue,
+        //           channelShowBadge: true,
+        //           playSound: true,
+        //           enableLights:true,
+        //           enableVibration: false
+        //       )
+        //     ]
+        // );
+
+/*        flutterLocalNotificationsPlugin!.show(
+            notification.hashCode,
+            "تم اضافة اعلان في الاعلانات المعلقة",
+            notification.body,
+            NotificationDetails(
+              android: AndroidNotificationDetails(
+                channel!.id,
+                channel!.name,
+                // channel!.description,
+
+                // TODO add a proper drawable resource to android, for now using
+                //      one that already exists in example app.
+                icon: '@mipmap/ic_launcher',
+              ),
+            ));*/
+
+        print("aaaaaaaaaaaawww${message.data["desc"]}");
+      }
+    });
   }
 }
 

@@ -21,10 +21,10 @@ class TripRemoteDataSource extends BaseTripRemoteDataSource {
   Future<ResponseHome> homeDriver({userId,lat,lng,address}) async{
 
 
-    var request = http.Request('GET', Uri.parse("${ApiConstants.homeDriverPath}userId=$userId&lat=${lat.toString()}&Lang=${lng.toString()}&address=$address"));
+    var request = http.Request('GET', Uri.parse("${ApiConstants.homeDriverPath}userId=$userId&lat=${lat.toString()}&lang=${lng.toString()}&address=$address"));
 
     http.StreamedResponse response = await request.send();
-
+    print(response.statusCode.toString()+"home driver");
     if (response.statusCode == 200) {
       String jsonsDataString = await response.stream.bytesToString();
       final jsonData = jsonDecode(jsonsDataString);

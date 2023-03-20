@@ -1,13 +1,16 @@
-
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:limousine_driver/core/utlis/api_constatns.dart';
+import 'package:limousine_driver/core/utlis/app_model.dart';
 import 'package:limousine_driver/core/utlis/data.dart';
+import 'package:limousine_driver/data/models/driver_model.dart';
 import 'package:limousine_driver/domin/entities/driver.dart';
 import 'package:limousine_driver/domin/usese_cases/driver_uses_cases/add_driver_use_case.dart';
-
+import 'package:http/http.dart' as http;
 
 import '../../../core/helpers/functions.dart';
 import '../../../core/utlis/enums.dart';
@@ -19,11 +22,11 @@ part 'driver_state.dart';
 class DriverCubit extends Cubit<DriverState> {
   AddDriverUseCase addDriverUseCase;
   AppUseCase appUseCase;
-  DriverCubit(this.addDriverUseCase,this.appUseCase) : super(DriverState());
+  DriverCubit(this.addDriverUseCase, this.appUseCase) : super(DriverState());
 
   static DriverCubit get(context) => BlocProvider.of<DriverCubit>(context);
 
-  CarBrand? brandId , typeCar, modelCar,madeYear;
+  CarBrand? brandId, typeCar, modelCar, madeYear;
   addDriver(Driver driver, {context}) async {
     emit(state.copyWith(addDriverState: RequestState.loading));
     final result = await addDriverUseCase.execute(driver);
@@ -72,18 +75,49 @@ class DriverCubit extends Cubit<DriverState> {
       }, (r) {
         print(r);
         if (typeImage == 1) {
-          emit(state.copyWith(passportImage: r,passportImageState: RequestState.loaded));
+          emit(state.copyWith(
+              passportImage: r, passportImageState: RequestState.loaded));
         } else if (typeImage == 2) {
-          emit(state.copyWith(carImage: r,carImageState:RequestState.loaded ));
+          emit(state.copyWith(carImage: r, carImageState: RequestState.loaded));
         } else {
-          emit(state.copyWith(drivingLicenseImage: r,drivingLicenseImageState: RequestState.loaded));
+          emit(state.copyWith(
+              drivingLicenseImage: r,
+              drivingLicenseImageState: RequestState.loaded));
         }
       });
     }
   }
 
-  changeValue(CarBrand newValue, int type) {
+// update driver
+  updateDriver({driverId, imageCar, imagePass, imageDriving}) async {
+    emit(state.copyWith(updateDriverState: RequestState.loading));
+    var request =
+        http.MultipartRequest('POST', Uri.parse(ApiConstants.updateDriverPath));
+    request.fields.addAll({
+      'id': driverId.toString(),
+      'Passport': imagePass,
+      'DrivingLicense': imageDriving,
+      'CarImage': imageCar
+    });
 
+    http.StreamedResponse response = await request.send();
+    print(response.statusCode.toString() + " ===> updateDriver");
+    if (response.statusCode == 200) {
+     
+
+      String jsonDataString = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonDataString);
+      DriverModel driverModel = DriverModel.fromJson(jsonData);
+      emit(state.copyWith(
+          updateDriverState: RequestState.loaded, updateResponse: driverModel));
+      getDriverById(driverId: driver!.id);
+    } else {
+      print(response.reasonPhrase);
+      emit(state.copyWith(updateDriverState: RequestState.error));
+    }
+  }
+
+  changeValue(CarBrand newValue, int type) {
     if (type == 1) {
       brandId = newValue;
       emit(state.copyWith(changeValue: true));
@@ -96,6 +130,30 @@ class DriverCubit extends Cubit<DriverState> {
     } else {
       madeYear = newValue;
       emit(state.copyWith(changeValue: true));
+    }
+  }
+
+// get Driver
+  getDriverById({driverId}) async {
+    emit(state.copyWith(getDriverState: RequestState.loading));
+    var request = http.Request(
+        'GET', Uri.parse(ApiConstants.getDriverByIDPath + driverId.toString()));
+
+    http.StreamedResponse response = await request.send();
+    print(response.statusCode.toString() + " ===> getDriverById");
+    if (response.statusCode == 200) {
+      String jsonDataString = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonDataString);
+      DriverModel driverModel = DriverModel.fromJson(jsonData);
+      emit(state.copyWith(
+          getDriverState: RequestState.loaded,
+          updateResponse: driverModel,
+          passportImage: driverModel.passport,
+          carImage: driverModel.carImage,
+          drivingLicenseImage: driverModel.drivingLicense));
+    } else {
+      print(response.reasonPhrase);
+      emit(state.copyWith(getDriverState: RequestState.error));
     }
   }
 }

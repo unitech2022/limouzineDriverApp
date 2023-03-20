@@ -13,6 +13,10 @@ class AuthState extends Equatable {
   final RequestState? imageStet;
   final String image;
   final String? errorImageMessage;
+    // get user
+  final RequestState? getUserState;
+  final RequestState? updateUserState;
+  final UserDetail? getUserDetails;
 
   AuthState(
       {this.loginStet,
@@ -26,7 +30,11 @@ class AuthState extends Equatable {
       this.responseLogin,
         this.responseSignUp,
       this.loginMessage,
-      this.signUpMessage});
+      this.signUpMessage,
+       this.getUserDetails,
+      this.getUserState,
+      this.updateUserState
+      });
 
   AuthState copyWith(
           {final RequestState? imageStet,
@@ -39,6 +47,11 @@ class AuthState extends Equatable {
           final String? checkUserMessage,
           final String? signUpMessage,
           final User? user,
+
+           final RequestState? updateUserState,
+    
+            final RequestState? getUserState,
+  final UserDetail? getUserDetails,
             final ResponseLogin? responseLogin,
           final ResponseSignUp? responseSignUp}) =>
       AuthState(
@@ -53,7 +66,11 @@ class AuthState extends Equatable {
           signUpStet: signUpStet ?? this.signUpStet,
           imageStet: imageStet ?? this.imageStet,
           image: image ?? this.image,
-          errorImageMessage: errorImageMessage ?? this.errorImageMessage);
+          errorImageMessage: errorImageMessage ?? this.errorImageMessage,
+           getUserDetails: getUserDetails ?? this.getUserDetails,
+          getUserState: getUserState?? this.getUserState,
+           updateUserState: updateUserState ?? this.updateUserState,
+          );
 
   @override
   List<Object?> get props => [
@@ -68,6 +85,9 @@ class AuthState extends Equatable {
         imageStet,
         image,
         errorImageMessage,
-      responseSignUp
+      responseSignUp,
+      getUserDetails,
+        getUserState,
+        updateUserState
       ];
 }

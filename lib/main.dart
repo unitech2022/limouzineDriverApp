@@ -1,14 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:limousine_driver/domin/entities/driver.dart';
 import 'package:limousine_driver/persentaion/controller/app_cubit/cubit/app_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/auth_cubit/auth_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/driver_cubit/driver_cubit.dart';
+import 'package:limousine_driver/persentaion/controller/notifictions_cubit/cubit/notifications_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
 import 'package:limousine_driver/persentaion/ui/badges_screen/badges_screen.dart';
 import 'package:limousine_driver/persentaion/ui/chose_lang_screen/chose_screen.dart';
@@ -32,12 +35,24 @@ import 'core/services/services_locator.dart';
 import 'core/thems/them.dart';
 import 'persentaion/ui/account_screen/account_screen.dart';
 
+Future<void> _messageHandler(RemoteMessage message) async {
+
+}
+AndroidNotificationChannel? channel =
+AndroidNotificationChannel("key1", "chat");
+
+/// Initialize the [FlutterLocalNotificationsPlugin] package.
+FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin =
+FlutterLocalNotificationsPlugin();
 void main() async {
   ServicesLocator().init();
   WidgetsFlutterBinding.ensureInitialized();
     await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
   await readToken();
+   await getLocation();
+    FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  FirebaseMessaging.onMessageOpenedApp;
   runApp(
     EasyLocalization(
         supportedLocales: const [Locale("ar"), Locale("en")],
@@ -74,6 +89,8 @@ class MyApp extends StatelessWidget {
             
         BlocProvider<TripCubit>(
             create: (BuildContext context) => sl<TripCubit>()),
+             BlocProvider<NotificationsCubit>(
+            create: (BuildContext context) => sl<NotificationsCubit>()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
         builder: (context, state) {

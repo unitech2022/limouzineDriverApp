@@ -17,6 +17,8 @@ class Strings {
   static const String loginTitle = "تسجيل الدخول للحساب";
   static const String login1 = "تسجيل ";
   static const String login2 = "الدخول للحساب";
+
+
   static const String descLogin =
       "برجاء استخدام بيانات المعرفه مسبقا للدخول الي حسابك الموجود علي منصتنا";
 
@@ -228,6 +230,11 @@ class Strings {
   static const String yourBadges = "الالقاب التي حصلت عليها";
   static const String statuse = "الان بامكانك استقبال مهام جديدة";
 
+
+
+ static const String updateOffical = " تعديل الوثائق الرسمية" ;
+
+
   static const String badge1 = "تحصل عليه بعد تقييمك بخمس نجوم من اول رحلة";
   static const String badge2 = "تحصل عليه بعد تقييمك بخمس نجوم 30 رحلة";
   static const String badge3 = "تحصل عليه بعد اتمامك  30 رحلة موفقة";
@@ -254,5 +261,10 @@ class Strings {
 
   static const String pleasEnterName = "من فضلك أدخل الاسم";
   static const String pleasEnterEmail = "من فضلك أدخل البريد الالكترومي";
+
+  static const String isActive = "لا يمكن تغيير الحالة وهناك رحلة حالية ";
+  static const String notNoty = "لا توجد اشعارات";
+  
+  
 
 }
