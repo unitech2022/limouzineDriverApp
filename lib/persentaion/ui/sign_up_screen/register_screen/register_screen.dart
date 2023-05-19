@@ -174,7 +174,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 controller: _controllerPhone,
                                 keyboardType: TextInputType.number,
                                 cursorColor: Colors.grey,
-                                maxLength: 8,
+                                maxLength: 9,
                                 decoration: InputDecoration(
                                     counterText: "",
                                     hintStyle: TextStyle(fontSize: 14),
@@ -245,7 +245,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           context: context
       );
       return false;
-    } else if (_controllerPhone.text.isEmpty||_controllerPhone.text.length<8) {
+    } else if (_controllerPhone.text.isEmpty||_controllerPhone.text.length<9) {
       showSnakeBar(
           message: Strings.pleasEnterPhone.tr(),
           context: context

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     TripCubit.get(context)
         .updateDeviceToken(userId: currentUser.id, token: AppModel.deviceToken);
     TripCubit.get(context).homeTrip(
+      context: context,
         userId: currentUser.id!,
         lat: locData.latitude,
         lng: locData.longitude,
@@ -80,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 appBar: PreferredSize(
                   preferredSize: Size.fromHeight(50.0),
                   child: AppBarHome(
-                    title: Strings.main,
+                    title: Strings.main.tr(),
                     child: Container(
                       margin: EdgeInsets.all(12),
                       height: 16,
@@ -119,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ItemCurrentTrip(state.responseHome!)),
                         )
                       : SizedBox(),
-
+                      
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
@@ -129,7 +131,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
-
+                      
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: [
@@ -156,7 +158,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   // sizedHeight(18),
                   // // list Orders
-
+                      
                   // Row(
                   //   children: [
                   //     ContainerTabWidget(
@@ -184,7 +186,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   // sizedHeight(11),
                   //List
-
+                      
                   // index == Strings.showList
                   //     ? ListCurrentOrders()
                   //     : SizedBox(
@@ -197,6 +199,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   //             zoom: 14.0,
                   //           ),
                   //         )),
+                  // button refresh page
+                  ,Align(
+                    alignment: Alignment.topCenter,
+                    child: IconButton(icon: Icon(Icons.refresh,color: homeColor,size: 30,),onPressed: () {
+                         TripCubit.get(context).homeTrip(
+                              userId: currentUser.id!,
+                              lat: locData.latitude,
+                              lng: locData.longitude,
+                              address: "currentLocation");
+                    },),
+                  )
                 ]));
       },
     );
@@ -213,6 +226,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // NotifyAowsome(notification!.title!,notification.body!);
       if (notification != null && android != null && !kIsWeb) {
+           print("senedddd ========> send");
+           
         TripCubit.get(context).homeTrip(
             userId: currentUser.id!,
             lat: locData.latitude,

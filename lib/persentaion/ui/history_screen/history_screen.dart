@@ -1,13 +1,10 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:limousine_driver/core/helpers/helper_functions.dart';
-import 'package:limousine_driver/core/routers/routers.dart';
 import 'package:limousine_driver/core/styles/colors.dart';
 import 'package:limousine_driver/data/models/history_response.dart';
-
 import '../../../core/utlis/enums.dart';
 import '../../../core/utlis/strings.dart';
 import '../../../core/widgets/loading_widget.dart';
@@ -17,6 +14,7 @@ import '../home_screen/components/app_bar_home.dart';
 import '../home_screen/components/container_details_trip.dart';
 import '../home_screen/components/container_point_widget.dart';
 import '../home_screen/components/drawer_widget.dart';
+import '../notifications_screen/notifications_screen.dart';
 
 class HistoryScreen extends StatefulWidget {
   @override
@@ -45,7 +43,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           appBar: PreferredSize(
               preferredSize: Size.fromHeight(50.0),
               child: AppBarHome(
-                title: Strings.history,
+                title: Strings.history.tr(),
                 onTap: () {
                   _scaffoldKey.currentState!.openDrawer();
                 },
@@ -87,7 +85,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                           // ),
 
                           TabHistoryWidget(
-                            title: Strings.done,
+                            title: Strings.done.tr(),
                             textColor1: index == 1 ? Colors.white : homeColor,
                             containerColor:
                                 index == 1 ? homeColor : Colors.transparent,
@@ -98,7 +96,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             },
                           ),
                           TabHistoryWidget(
-                            title: Strings.canceled,
+                            title: Strings.canceled.tr(),
                             textColor1: index == 2 ? Colors.white : homeColor,
                             containerColor:
                                 index == 2 ? homeColor : Colors.transparent,
@@ -135,7 +133,10 @@ class DoneTripsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return list.isEmpty? ListEmptyWidget(
+                          title: Strings.notTrips.tr(),
+                          textColor: homeColor,
+                        ): ListView.builder(
         itemCount: list.length,
         itemBuilder: (context, index) {
           HistoryModel historyModel = list[index];
@@ -170,7 +171,7 @@ class ItemListHistory extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Texts(
-                          title: "طلب رقم : ${historyModel.trip!.id}",
+                          title: Strings.numberOrder.tr() + ": " + historyModel.trip!.id.toString(),
                           textColor: Color(0xffA5A5A5),
                           fontSize: 12,
                           weight: FontWeight.bold,
@@ -189,7 +190,7 @@ class ItemListHistory extends StatelessWidget {
                   ),
                   ContainerDetailsTrip(
                     icon: "assets/icons/wallet.svg",
-                    label: Strings.cost,
+                    label: Strings.cost.tr(),
                     textColor: Colors.black,
                     value1: historyModel.trip!.price.toString(),
                     value2: "ر.س",
@@ -197,7 +198,7 @@ class ItemListHistory extends StatelessWidget {
                   ),
                   ContainerDetailsTrip(
                     icon: "assets/icons/history_home.svg",
-                    label: Strings.timeTrip,
+                    label: Strings.timeTrip.tr(),
                     textColor: Colors.black,
                     value1: "45",
                     value2: "دقيقة",
@@ -207,14 +208,14 @@ class ItemListHistory extends StatelessWidget {
                   ContainerStartingPointWidget(
                     value:
                        historyModel.trip!.startAddress,
-                    label: Strings.startPoint,
+                    label: Strings.startPoint.tr(),
                     color: buttonsColor,
                   ),
                   sizedHeight(15),
                   ContainerStartingPointWidget(
                     value:
                          historyModel.trip!.endAddress,
-                    label: Strings.endPoint,
+                    label: Strings.endPoint.tr(),
                     color: Color(0xff88D55F),
                   ),
                 ],

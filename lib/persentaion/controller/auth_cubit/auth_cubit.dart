@@ -6,6 +6,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:limousine_driver/persentaion/ui/sign_up_screen/register_screen/register_screen.dart';
 
 import '../../../core/helpers/functions.dart';
+import '../../../core/helpers/helper_functions.dart';
 import '../../../core/utlis/api_constatns.dart';
 import '../../../core/utlis/app_model.dart';
 import '../../../core/utlis/enums.dart';

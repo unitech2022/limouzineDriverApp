@@ -85,8 +85,15 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                                     height: 90,
                                     width: 90,
                                     child: state.passportImage == ""
-                                        ? Image.asset(
-                                            "assets/images/image_person.png")
+                                        ? SizedBox(
+                                            child: Center(
+                                                child: Icon(
+                                              Icons.camera_alt_outlined,
+                                              size: 30,
+                                              color: Color.fromARGB(
+                                                  255, 125, 124, 124),
+                                            )),
+                                          )
                                         : CircleImageWidget(
                                             height: 80,
                                             width: 80,
@@ -115,8 +122,15 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                                 height: 90,
                                 width: 90,
                                 child: state.carImage == ""
-                                    ? Image.asset(
-                                        "assets/images/image_person.png")
+                                    ? SizedBox(
+                                        child: Center(
+                                            child: Icon(
+                                          Icons.camera_alt_outlined,
+                                          size: 30,
+                                          color: Color.fromARGB(
+                                              255, 125, 124, 124),
+                                        )),
+                                      )
                                     : CircleImageWidget(
                                         height: 80,
                                         width: 80,
@@ -146,8 +160,15 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                                   height: 90,
                                   width: 90,
                                   child: state.drivingLicenseImage == ""
-                                      ? Image.asset(
-                                          "assets/images/image_person.png")
+                                      ? SizedBox(
+                                          child: Center(
+                                              child: Icon(
+                                            Icons.camera_alt_outlined,
+                                            size: 30,
+                                            color: Color.fromARGB(
+                                                255, 125, 124, 124),
+                                          )),
+                                        )
                                       : CircleImageWidget(
                                           height: 80,
                                           width: 80,
@@ -194,35 +215,53 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                       ),
                       sizedHeight(30),
 
-                  state.addDriverState==RequestState.loading?  LoadingWidget(height: 55,color: buttonsColor,):
-              ButtonWidget(
-                  height: 55,
-                  color: homeColor,
-                  onPress: () {
+                      state.addDriverState == RequestState.loading
+                          ? LoadingWidget(
+                              height: 55,
+                              color: buttonsColor,
+                            )
+                          : ButtonWidget(
+                              height: 55,
+                              color: homeColor,
+                              onPress: () {
+                                if (isValidate(
+                                    imagePass: state.passportImage,
+                                    imageCar: state.carImage,
+                                    imageDriving: state.drivingLicenseImage)) {
+                                  print("heeeeeee");
+                                  Driver driver = Driver(
+                                      id: 1,
+                                      userId: currentUser.id!,
+                                      lat: 0.0,
+                                      lng: 0.0,
+                                      zoneId:
+                                          DriverCubit.get(context).typeCar!.id,
+                                      passport: state.passportImage!,
+                                      drivingLicense:
+                                          state.drivingLicenseImage!,
+                                      carImage: state.carImage!,
+                                      carModelId:
+                                          DriverCubit.get(context).modelCar!.id,
+                                      carMakeYear: DriverCubit.get(context)
+                                          .modelCar!
+                                          .title,
+                                      status: 0,
+                                      createdAt: "");
 
-                    if (isValidate(imagePass:state.passportImage,imageCar: state.carImage,imageDriving:state.drivingLicenseImage)) {
+                                  DriverCubit.get(context)
+                                      .addDriver(driver, context: context);
+                                }
+                              },
+                              child: Texts(
+                                  title: Strings.continueLogin.tr(),
+                                  textColor: Colors.white,
+                                  fontSize: 14,
+                                  weight: FontWeight.normal,
+                                  align: TextAlign.center)),
 
-                      print("heeeeeee");
-                     Driver driver=Driver(id: 1, userId: currentUser.id!, lat: 0.0, lng: 0.0,
-                         zoneId:  DriverCubit.get(context).typeCar!.id, passport: state.passportImage!,
-                         drivingLicense: state.drivingLicenseImage!,
-                         carImage: state.carImage!, carModelId: DriverCubit.get(context).modelCar!.id,
-                         carMakeYear:  DriverCubit.get(context).modelCar!.title, status: 0, createdAt: "");
+                      sizedHeight(20),
 
-                    DriverCubit.get(context).addDriver(driver,context: context);
-                    }
-                  },
-                  child:  Texts(
-                      title: Strings.continueLogin.tr(),
-                      textColor: Colors.white,
-                      fontSize: 14,
-                      weight: FontWeight.normal,
-                      align: TextAlign.center)),
-
-              sizedHeight(20),
-
-
-              /*    SizedBox(
+                      /*    SizedBox(
             width: double.infinity,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -248,8 +287,8 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
               ],
             ),
           ),*/
-              sizedHeight(15),
-            /*  FieldSignUpWidget(
+                      sizedHeight(15),
+                      /*  FieldSignUpWidget(
                 controller: _controller,
                 label: Strings.firstName,
               ),
@@ -275,43 +314,28 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                 label: Strings.reapat,
                 pass: true,
               ),*/
-            ]),
-          ),
-        ));
-  },
-);
+                    ]),
+              ),
+            ));
+      },
+    );
   }
 
   bool isValidate({imageCar, imagePass, imageDriving}) {
-    if (imagePass=="") {
-      showSnakeBar(
-          message: "pass",
-          context: context
-      );
+    if (imagePass == "") {
+      showSnakeBar(message:"اختار صورة البطاقة", context: context);
       return false;
-    } else if (imageCar=="") {
-      showSnakeBar(
-          message: "car",
-          context: context
-      );
+    } else if (imageCar == "") {
+      showSnakeBar(message: "اختار صورة السيارة", context: context);
       return false;
-    } else if (imageDriving=="") {
-      showSnakeBar(
-          message: "drivv",
-          context: context
-      );
+    } else if (imageDriving == "") {
+      showSnakeBar(message: "اختار صورة رخصة القيادة", context: context);
       return false;
-    } else if (DriverCubit.get(context).brandId==null) {
-      showSnakeBar(
-          message: "brand",
-          context: context
-      );
+    } else if (DriverCubit.get(context).brandId == null) {
+      showSnakeBar(message: "brand", context: context);
       return false;
-    } else if (DriverCubit.get(context).typeCar==null) {
-      showSnakeBar(
-          message: "type",
-          context: context
-      );
+    } else if (DriverCubit.get(context).typeCar == null) {
+      showSnakeBar(message: "type", context: context);
       return false;
     } else if (DriverCubit.get(context).modelCar == null) {
       showSnakeBar(message: "mad", context: context);

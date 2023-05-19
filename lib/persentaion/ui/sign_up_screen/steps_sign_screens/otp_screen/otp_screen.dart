@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +28,38 @@ class OtpScreen extends StatefulWidget {
 
 class _OtpScreenState extends State<OtpScreen> {
   String code = "";
+    Timer? _timer;
+
+      int _start = 60;
+  void startTimer() {
+    const oneSec = const Duration(seconds: 1);
+    _timer = new Timer.periodic(
+      oneSec,
+      (Timer timer) {
+        if (_start == 0) {
+          setState(() {
+            timer.cancel();
+          });
+        } else {
+          setState(() {
+            _start--;
+          });
+        }
+      },
+    );
+  }
+ @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+     startTimer();
+  }
+    @override
+  void dispose() {
+    _timer!.cancel();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return  BlocBuilder<AuthCubit, AuthState>(
@@ -64,7 +98,7 @@ class _OtpScreenState extends State<OtpScreen> {
                 style: TextStyle(color: Color(0xffA5A5A5),fontSize: 15),
                 children: <InlineSpan>[
                   TextSpan(
-                    text: "02:55",
+                    text: "$_start",
                     style: TextStyle(fontSize:15,fontWeight: FontWeight.bold,color: buttonsColor),
                   )
                 ]

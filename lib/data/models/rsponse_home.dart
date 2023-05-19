@@ -13,6 +13,7 @@ class ResponseHome {
   final UserDetail? userDetail;
   final UserDetail? driverDetail;
 
+
   ResponseHome(
       {required this.trip,
      

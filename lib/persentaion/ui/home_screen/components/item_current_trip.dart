@@ -1,43 +1,23 @@
-import 'package:flutter/cupertino.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limousine_driver/core/routers/routers.dart';
 import 'package:limousine_driver/core/utlis/api_constatns.dart';
 import 'package:limousine_driver/core/utlis/enums.dart';
 import 'package:limousine_driver/core/widgets/loading_widget.dart';
 import 'package:limousine_driver/data/models/rsponse_home.dart';
 import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
-
 import '../../../../core/helpers/helper_functions.dart';
 import '../../../../core/styles/colors.dart';
 import '../../../../core/utlis/strings.dart';
 import '../../../../core/widgets/buttons.dart';
 import '../../../../core/widgets/circle_image_widget.dart';
 import '../../../../core/widgets/texts.dart';
-import '../home_screen.dart';
-import 'container_details_trip.dart';
+
 import 'container_point_widget.dart';
 
-// class ListCurrentOrders extends StatelessWidget {
-//   const ListCurrentOrders({
-//     Key? key,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return ListView.builder(
-//         itemCount: 3,
-//         padding: EdgeInsets.symmetric(vertical: 10),
-//         shrinkWrap: true,
-//         physics: NeverScrollableScrollPhysics(),
-//         itemBuilder: (context, index) {
-//           return Container();
-//         });
-//   }
-// }
 
 class ItemCurrentTrip extends StatelessWidget {
-  ResponseHome responseHome;
+ final ResponseHome responseHome;
 
   ItemCurrentTrip(this.responseHome);
 
@@ -110,13 +90,15 @@ class ItemCurrentTrip extends StatelessWidget {
               sizedHeight(20),
               ContainerPointWidget(
                 color: buttonsColor,
-                label: Strings.startPoint,
+                width: 14,
+                label: Strings.startPoint.tr(),
                 value: responseHome.trip!.startAddress,
               ),
               sizedHeight(22),
               ContainerPointWidget(
                 color: Color(0xff88D55F),
-                label: Strings.endPoint,
+                label: Strings.endPoint.tr(),
+                  width: 14,
                 value: responseHome.trip!.endAddress,
               ),
               sizedHeight(20),
@@ -141,7 +123,7 @@ class ItemCurrentTrip extends StatelessWidget {
               child: MaterialButton(
             color: homeColor,
             child: Texts(
-                title: Strings.accept,
+                title: Strings.accept.tr(),
                 textColor: Colors.white,
                 fontSize: 14,
                 weight: FontWeight.normal,
@@ -166,7 +148,7 @@ class ItemCurrentTrip extends StatelessWidget {
             height: 42,
             color: Color(0xffA5A5A5),
             child: Texts(
-                title: Strings.cancel,
+                title: Strings.cancel.tr(),
                 textColor: Colors.white,
                 fontSize: 14,
                 weight: FontWeight.normal,
@@ -181,7 +163,7 @@ class ItemCurrentTrip extends StatelessWidget {
           
           color: homeColor,
           child: Texts(
-              title: "وصلت ",
+              title: "وصلت".tr(),
               textColor: Colors.white,
               fontSize: 14,
               weight: FontWeight.normal,
@@ -199,23 +181,12 @@ class ItemCurrentTrip extends StatelessWidget {
     } else if (status == 2) {
       return SizedBox(
          width: double.infinity,
-        child: MaterialButton(
-          color: homeColor,
-          child: Texts(
-              title: "تم الركوب ",
-              textColor: Colors.white,
-              fontSize: 14,
-              weight: FontWeight.normal,
-              align: TextAlign.center),
-          height: 42,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          onPressed: () {
-            TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 3,userId:responseHome.trip!.userId );
-          },
-        ),
+        child: Texts(
+            title: "في انتظار ركوب العميل".tr(),
+            textColor:homeColor,
+            fontSize: 14,
+            weight: FontWeight.bold,
+            align: TextAlign.center),
       );
     } else if (status == 3) {
       return SizedBox(
@@ -223,7 +194,7 @@ class ItemCurrentTrip extends StatelessWidget {
         child: MaterialButton(
           color: homeColor,
           child: Texts(
-              title: "تم الوصول للوجهة ",
+              title: "تم الوصول للوجهة".tr(),
               textColor: Colors.white,
               fontSize: 14,
               weight: FontWeight.normal,
@@ -244,7 +215,7 @@ class ItemCurrentTrip extends StatelessWidget {
         child: MaterialButton(
           color: homeColor,
           child: Texts(
-              title: "تم التـأكيد من السائق ",
+              title: "التـأكيد من السائق".tr(),
               textColor: Colors.white,
               fontSize: 14,
               weight: FontWeight.normal,
@@ -262,27 +233,16 @@ class ItemCurrentTrip extends StatelessWidget {
     } else if (status == 5) {
       return SizedBox(
          width: double.infinity,
-        child: MaterialButton(
-          color: homeColor,
-          child: Texts(
-              title: "تم التأكيد من العميل ",
-              textColor: Colors.white,
-              fontSize: 14,
-              weight: FontWeight.normal,
-              align: TextAlign.center),
-          height: 42,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30.0),
-          ),
-          onPressed: () {
-            TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 6,userId:responseHome.trip!.userId );
-          },
-        ),
+        child: Texts(
+            title: "في انتظار التأكيد من العميل".tr(),
+            textColor:homeColor,
+            fontSize: 14,
+            weight: FontWeight.bold,
+            align: TextAlign.center),
       );
     } else {
       return Texts(
-          title: "تمت العملية",
+          title: "تمت العملية".tr(),
           textColor: textColor,
           fontSize: 16,
           weight: FontWeight.bold,

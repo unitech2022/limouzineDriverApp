@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
-import 'package:limousine_driver/domin/entities/driver.dart';
+
+
 import 'package:limousine_driver/persentaion/controller/app_cubit/cubit/app_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/auth_cubit/auth_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/driver_cubit/driver_cubit.dart';
@@ -19,6 +19,7 @@ import 'package:limousine_driver/persentaion/ui/edit_account_screen/edit_account
 import 'package:limousine_driver/persentaion/ui/history_screen/history_screen.dart';
 import 'package:limousine_driver/persentaion/ui/home_screen/home_screen.dart';
 import 'package:limousine_driver/persentaion/ui/login_screen/login_screen.dart';
+import 'package:limousine_driver/persentaion/ui/my_groups_screen/my_groups_screen.dart';
 import 'package:limousine_driver/persentaion/ui/notifications_screen/notifications_screen.dart';
 import 'package:limousine_driver/persentaion/ui/policy_screen/policy_screen.dart';
 import 'package:limousine_driver/persentaion/ui/settings_screen/settings_screen.dart';
@@ -60,7 +61,7 @@ void main() async {
         // <-- change the path of the translation files
         fallbackLocale: const Locale("ar"),
         startLocale: const Locale("ar"),
-        child: Phoenix(child: const MyApp())),
+        child: const MyApp()),
   );
 }
 
@@ -119,7 +120,8 @@ class MyApp extends StatelessWidget {
              signUp:(context) => CreateAccountDriverScreen(),
               // subscription:(context) => SubscriptionsScreen(),
               settings: (context) => SettingsScreen(),
-              support: (context) => SupportScreen()
+              support: (context) => SupportScreen(),
+               externalTrip: (context) => MyGroupsScreen(),
             },
           );
         },

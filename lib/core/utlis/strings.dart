@@ -17,7 +17,7 @@ class Strings {
   static const String loginTitle = "تسجيل الدخول للحساب";
   static const String login1 = "تسجيل ";
   static const String login2 = "الدخول للحساب";
-
+ static const String configDelete = "هل أنت متأكد أنك تريد حذف الحساب ؟";
 
   static const String descLogin =
       "برجاء استخدام بيانات المعرفه مسبقا للدخول الي حسابك الموجود علي منصتنا";
@@ -99,6 +99,7 @@ class Strings {
   static const String downloadInvoice = "تحميل الفاتورة";
   static const String repetition = "تكرار";
   static const String share = "مشاركة";
+    static const String shareApp = " مشاركةالتطبيق";
   static const String subscribeNow = "اشترك الان";
   static const String selectDestinations = "حدد الوجهات";
   static const String numberOfStudents = "عدد الطلاب";
@@ -155,6 +156,7 @@ class Strings {
   static const String uses = "الاستخدام";
   static const String praivcy = "سياسات الاستخدام و الخصوصية";
   static const String deleteAccount = "حذف الحساب";
+   static const String delete = "حذف ";
   static const String selectPhoto = "اختر صورة شخصية حقيقية";
   static const String typeImage = "jpg, jpeg, png";
   static const String sizeImage = "2 MB max";
@@ -229,10 +231,11 @@ class Strings {
   static const String myProfiel = "الملف الشخصي";
   static const String yourBadges = "الالقاب التي حصلت عليها";
   static const String statuse = "الان بامكانك استقبال مهام جديدة";
+    static const String numberOrder ="طلب رقم";
 
 
 
- static const String updateOffical = " تعديل الوثائق الرسمية" ;
+ static const String updateOffical = "تعديل الوثائق الرسمية" ;
 
 
   static const String badge1 = "تحصل عليه بعد تقييمك بخمس نجوم من اول رحلة";
@@ -266,5 +269,24 @@ class Strings {
   static const String notNoty = "لا توجد اشعارات";
   
   
+
+
+    static const String notTrips = "لا توجد رحلات";
+static const String call ="اتصال";
+static const String whatsApp ="WhatsApp";
+static const String help ="التواصل مع الدعم الفني";
+static const String change ="تغيير";
+static const String cancle ="الغاء";
+static const String deleteAccountSuccess ="تم استلام طلبك وسيتم التواصل معك ";
+
+
+static const String tripExternal ="الرحلات الخارجية";
+static const String numberTrip ="رحلة رقم :";
+
+static const String numberPeoplesTrip ="عدد الأفراد : ";
+static const String myTrip ="رحلاتى";
+static const String detailsTrip ="تفاصيل الرحلة";
+static const String peopls ="المشتركون";
+static const String acceptTrip ="قبول الرحلة ";
 
 }

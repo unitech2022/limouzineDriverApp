@@ -60,17 +60,19 @@ class ContainerAddPhotoWidget extends StatelessWidget {
                       border: Border.all(color: Colors.grey, width: 1)),
                   child:Stack(children: [
                    imageWidget,
-                    Positioned(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      bottom: 0,
-                      child: Icon(
-                        Icons.camera_alt_outlined,
-                        size: 30,
-                        color: Color.fromARGB(255, 125, 124, 124),
-                      ),
-                    ),
+                    // Positioned(
+                    //   left: 0,
+                    //   right: 0,
+                    //   top: 0,
+                    //   bottom: 0,
+                    //   child: Icon(
+                    //     Icons.camera_alt_outlined,
+                    //     size: 30,
+                    //     color: Color.fromARGB(255, 125, 124, 124),
+                    //   ),
+                    // ),
+                   
+                   
                     Positioned(
                         left: 0,
                         top: 5,

@@ -9,6 +9,11 @@ class TripState extends Equatable {
   // grt histories
   final RequestState? getHistoriesState;
   final ResponseHistory? histories;
+    final RequestState? getGroupsState;
+  final List<Group> groupsLocation;
+   final RequestState? getGroupDetailsState;
+  final GroupDetails? groupDetails;
+   final RequestState? acceptGroupState;
 
   TripState(
       {this.statusDriver,
@@ -17,7 +22,13 @@ class TripState extends Equatable {
       this.changeStatusTrip,
       this.updateDeviceTokenState,
       this.getHistoriesState,
-      this.histories});
+      this.histories,
+       this.groupsLocation = const [],
+      this.getGroupsState,
+        this.getGroupDetailsState,
+      this.groupDetails,
+      this.acceptGroupState
+      });
 
   TripState copyWith(
           {final statues,
@@ -27,7 +38,13 @@ class TripState extends Equatable {
           final RequestState? changeStatusTrip,
           final RequestState? updateDeviceTokenState,
           final RequestState? getHistoriesState,
-          final ResponseHistory? histories}) =>
+          final ResponseHistory? histories,
+            final List<Group>? groupsLocation,
+          final RequestState? getGroupsState,
+           final RequestState? getGroupDetailsState,
+  final GroupDetails? groupDetails,
+    final RequestState? acceptGroupState
+          }) =>
       TripState(
         homeState: homeState ?? this.homeState,
         statusDriver: statusDriver ?? this.statusDriver,
@@ -37,6 +54,11 @@ class TripState extends Equatable {
             updateDeviceTokenState ?? this.updateDeviceTokenState,
         getHistoriesState: getHistoriesState ?? this.getHistoriesState,
         histories: histories ?? this.histories,
+         getGroupsState: getGroupsState ?? this.getGroupsState,
+        groupsLocation: groupsLocation ?? this.groupsLocation,
+        groupDetails: groupDetails ?? this.groupDetails,
+        getGroupDetailsState: getGroupDetailsState ?? this.getGroupDetailsState,
+         acceptGroupState: acceptGroupState ?? this.acceptGroupState,
       );
 
   @override
@@ -47,6 +69,11 @@ class TripState extends Equatable {
         updateDeviceTokenState,
         statusDriver,
         histories,
-        getHistoriesState
+        getHistoriesState,
+          getGroupsState,
+        groupsLocation,
+        getGroupDetailsState,
+     groupDetails,
+     acceptGroupState
       ];
 }

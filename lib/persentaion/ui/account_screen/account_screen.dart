@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:limousine_driver/core/helpers/functions.dart';
 import 'package:limousine_driver/core/helpers/helper_functions.dart';
 import 'package:limousine_driver/core/styles/colors.dart';
 import 'package:limousine_driver/core/utlis/api_constatns.dart';
@@ -23,14 +25,16 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: DrawerWidget(
+      drawer: DrawerWidget(
         scaffoldKey: _scaffoldKey,
       ),
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50.0),
         child: AppBarHome(
-          title: Strings.myProfiel,
-          onTap: () {},
+          title: Strings.myProfiel.tr(),
+          onTap: () {
+            _scaffoldKey.currentState!.openDrawer();
+          },
           child: IconButton(
               onPressed: () {},
               icon: Icon(
@@ -84,7 +88,7 @@ class AccountScreen extends StatelessWidget {
                   height: 44,
                   color: buttonsColor,
                   child: Texts(
-                      title: Strings.editAccounte,
+                      title: Strings.editAccounte.tr(),
                       textColor: Colors.white,
                       fontSize: 14,
                       weight: FontWeight.normal,
@@ -95,22 +99,22 @@ class AccountScreen extends StatelessWidget {
               height: .8,
             ),
             sizedHeight(31),
-            RowItemProfile(
-              textColor: Colors.black,
-              onTap: () {},
-              color: Color(0xff0B2957),
-              icon: "assets/icons/sittings.svg",
-              title: Strings.genralSitings,
-            ),
-            sizedHeight(23),
+            // RowItemProfile(
+            //   textColor: Colors.black,
+            //   onTap: () {},
+            //   color: Color(0xff0B2957),
+            //   icon: "assets/icons/sittings.svg",
+            //   title: Strings.genralSitings.tr(),
+            // ),
+            // sizedHeight(23),
             RowItemProfile(
               textColor: Colors.black,
               onTap: () {
-                pushPage(context, UpdateOfficialDocuments());
+                pushPage(context:context,page: UpdateOfficialDocuments());
               },
               color: Color(0xff0B2957),
               icon: "assets/icons/acount.svg",
-              title: Strings.myData,
+              title: Strings.myData.tr(),
             ),
             sizedHeight(23),
             RowItemProfile(
@@ -118,7 +122,7 @@ class AccountScreen extends StatelessWidget {
               onTap: () {},
               color: Color(0xff0B2957),
               icon: "assets/icons/acount.svg",
-              title: Strings.dataBank,
+              title: Strings.dataBank.tr(),
             ),
             sizedHeight(23),
             Divider(
@@ -127,10 +131,12 @@ class AccountScreen extends StatelessWidget {
             sizedHeight(23),
             RowItemProfile(
               textColor: Colors.black,
-              onTap: () {},
+              onTap: () {
+                signOut(ctx: context);
+              },
               color: Color(0xff0B2957),
               icon: "assets/icons/logout.svg",
-              title: Strings.logoutFromAccount,
+              title: Strings.logoutFromAccount.tr(),
             ),
             sizedHeight(23),
             RowItemProfile(
@@ -138,7 +144,7 @@ class AccountScreen extends StatelessWidget {
               onTap: () {},
               color: Color(0xffF2154F),
               icon: "assets/icons/delete2.svg",
-              title: Strings.deleteAccount,
+              title: Strings.deleteAccount.tr(),
             ),
           ],
         )),
@@ -162,7 +168,7 @@ class RowItemProfile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap:onTap,
+      onTap: onTap,
       child: Row(
         children: [
           Container(
@@ -170,7 +176,8 @@ class RowItemProfile extends StatelessWidget {
             width: 24,
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8), color: Color(0xffEAEAEA)),
+                borderRadius: BorderRadius.circular(8),
+                color: Color(0xffEAEAEA)),
             child: SvgPicture.asset(icon, color: color),
           ),
           sizedWidth(22),
@@ -186,8 +193,8 @@ class RowItemProfile extends StatelessWidget {
               height: 24,
               width: 24,
               alignment: Alignment.center,
-              decoration:
-                  BoxDecoration(shape: BoxShape.circle, color: Color(0xffEAEAEA)),
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, color: Color(0xffEAEAEA)),
               child: Icon(
                 Icons.keyboard_arrow_left,
                 color: Color(0xff0B2957),

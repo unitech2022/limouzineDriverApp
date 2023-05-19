@@ -21,7 +21,7 @@ class PolicyScreen extends StatelessWidget {
     return Scaffold(
 
        key: _scaffoldKey,
-      endDrawer: DrawerWidget(
+      drawer: DrawerWidget(
         scaffoldKey: _scaffoldKey,
       ),
       appBar: PreferredSize(

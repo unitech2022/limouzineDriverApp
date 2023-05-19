@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -47,14 +48,16 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       builder: (context, state) {
         return Scaffold(
           key: _scaffoldKey,
-          endDrawer: DrawerWidget(
+          drawer: DrawerWidget(
             scaffoldKey: _scaffoldKey,
           ),
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(50.0),
             child: AppBarHome(
-              title: Strings.myProfiel,
-              onTap: () {},
+              title: Strings.myProfiel.tr(),
+              onTap: () {
+                _scaffoldKey.currentState!.openDrawer();
+              },
               child: IconButton(
                   onPressed: () {},
                   icon: Icon(
@@ -91,17 +94,19 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                                         border: Border.all(
                                             color: buttonsColor, width: 3),
                                         shape: BoxShape.circle),
-                                    child:state.imageStet == RequestState.loading
-                                      ? LoadingWidget(
-                                          height: 120, color:homeColor)
-                                      : CircleImageWidget(
-                                        height: 120,
-                                        width: 120,
-                                        image: state.image == ""
-                                            ? ApiConstants.imageUrl(state
-                                                .getUserDetails!.profileImage!)
-                                            : ApiConstants.imageUrl(
-                                                state.image)),
+                                    child: state.imageStet ==
+                                            RequestState.loading
+                                        ? LoadingWidget(
+                                            height: 120, color: homeColor)
+                                        : CircleImageWidget(
+                                            height: 120,
+                                            width: 120,
+                                            image: state.image == ""
+                                                ? ApiConstants.imageUrl(state
+                                                    .getUserDetails!
+                                                    .profileImage!)
+                                                : ApiConstants.imageUrl(
+                                                    state.image)),
                                   ),
                                 ),
                                 Positioned(
@@ -140,7 +145,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Texts(
-                                title: Strings.name,
+                                title: Strings.name.tr(),
                                 textColor: Color(0xff464646),
                                 fontSize: 10,
                                 family: "alex_bold",
@@ -158,7 +163,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Texts(
-                                title: Strings.email,
+                                title: Strings.email.tr(),
                                 textColor: Color(0xff464646),
                                 fontSize: 10,
                                 family: "alex_bold",
@@ -178,7 +183,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Texts(
-                                title: Strings.number,
+                                title: Strings.number.tr(),
                                 textColor: Color(0xff464646),
                                 fontSize: 10,
                                 family: "alex_bold",
@@ -274,31 +279,30 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                       //   raduis: 30,
                       // ),
                       sizedHeight(28),
-                       state.updateUserState == RequestState.loading
-                                  ? LoadingWidget(
-                                      height: 55, color: buttonsColor)
-                                  : SizedBox(
-                        width: double.infinity,
-                        child: Buttons2(
-                          onPress: () {
-                            AuthCubit.get(context).updateUser(
-                                fullName: _controllerName.text,
-                                email: _controllerEmail.text,
-                                image: state.image == ""
-                                    ? state.getUserDetails!.profileImage!
-                                    : state.image);
-                          },
-                          radus: 10,
-                          height: 44,
-                          color: homeColor,
-                          child: Texts(
-                              title: Strings.save,
-                              textColor: Colors.white,
-                              fontSize: 14,
-                              weight: FontWeight.normal,
-                              align: TextAlign.center),
-                        ),
-                      ),
+                      state.updateUserState == RequestState.loading
+                          ? LoadingWidget(height: 55, color: buttonsColor)
+                          : SizedBox(
+                              width: double.infinity,
+                              child: Buttons2(
+                                onPress: () {
+                                  AuthCubit.get(context).updateUser(
+                                      fullName: _controllerName.text,
+                                      email: _controllerEmail.text,
+                                      image: state.image == ""
+                                          ? state.getUserDetails!.profileImage!
+                                          : state.image);
+                                },
+                                radus: 10,
+                                height: 44,
+                                color: homeColor,
+                                child: Texts(
+                                    title: Strings.save.tr(),
+                                    textColor: Colors.white,
+                                    fontSize: 14,
+                                    weight: FontWeight.normal,
+                                    align: TextAlign.center),
+                              ),
+                            ),
                     ],
                   )),
                 ),

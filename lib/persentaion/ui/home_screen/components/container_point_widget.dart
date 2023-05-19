@@ -8,8 +8,9 @@ import '../../../../core/widgets/texts.dart';
 class ContainerPointWidget extends StatelessWidget {
   final String label, value;
   final Color color;
+  final double width;
   const ContainerPointWidget(
-      {required this.label, required this.value, required this.color});
+      {required this.label, required this.value, required this.color, required this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +32,13 @@ class ContainerPointWidget extends StatelessWidget {
                 Texts(
                     title: label,
                     textColor: Colors.black,
-                    fontSize: 10,
+                    fontSize: width,
                     weight: FontWeight.w800,
                     align: TextAlign.start),
                 Texts(
                     title: value,
-                    textColor: Colors.black,
-                    fontSize: 10,
+                    textColor:color,
+                    fontSize:width,
                     weight: FontWeight.normal,
                     align: TextAlign.start),
               ],

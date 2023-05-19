@@ -41,7 +41,7 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBarHome(
-            title: Strings.notys,
+            title: Strings.notys.tr(),
             onTap: () {
               _scaffoldKey.currentState!.openDrawer();
             },

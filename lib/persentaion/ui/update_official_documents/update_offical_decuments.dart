@@ -40,7 +40,7 @@ class _UpdateOfficialDocumentsState extends State<UpdateOfficialDocuments> {
         return Scaffold(
           appBar: AppBar(
             centerTitle: true,
-            title: Texts(title:  Strings.updateOffical, align: TextAlign.center,fontSize: 16, textColor: Colors.white, weight: FontWeight.normal,)),
+            title: Texts(title:  Strings.updateOffical.tr(), align: TextAlign.center,fontSize: 16, textColor: Colors.white, weight: FontWeight.normal,)),
           body: state.getDriverState == RequestState.loading
               ? Center(
                   child: LoadingWidget(height: 55, color: homeColor),

@@ -4,6 +4,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:location/location.dart';
 
+import '../../persentaion/ui/login_screen/login_screen.dart';
 import '../utlis/app_model.dart';
 
 
@@ -15,17 +16,9 @@ printFunction(message) {
   // ignore: avoid_print
   print(message);
 }
-pop(context) {
-  Navigator.of(context).pop();
-}
 
-pushPage({context, page}) {
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      builder: (context) => page,
-    ),
-  );
-}
+
+
 replacePage({context, page}) {
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => page));
@@ -127,14 +120,14 @@ saveData(key , value) async{
 //   print("${locData.latitude} lat:${locData.longitude} LNG:");
 // }
 
-// signOut({ctx}) async {
-//   const storage = FlutterSecureStorage();
+signOut({ctx}) async {
+  const storage = FlutterSecureStorage();
 
-//   token = "";
-//   await storage.delete(key: "token");
-//   // await storage.delete(key: "id");
-//   replacePage(context: ctx, page: const LoginScreen());
-// }
+  currentUser.token = "";
+  await storage.delete(key: "token");
+  // await storage.delete(key: "id");
+  replacePage(context: ctx, page:  LoginScreen());
+}
 
 
 // int createUniqueId() {
@@ -153,6 +146,7 @@ showSnakeBar({context,message}){
   final snackBar = SnackBar(
     content:  Text(message,style: TextStyle(fontSize: 12,color: Colors.white),),
     backgroundColor: Colors.red,
+   
     action: SnackBarAction(
       label: '',
       textColor:Colors.transparent,
