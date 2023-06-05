@@ -1,7 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:limousine_driver/persentaion/ui/group_details_screen/group_details_screen.dart';
+
 
 import '../../../core/helpers/helper_functions.dart';
 import '../../../core/styles/colors.dart';
@@ -69,7 +69,7 @@ class _MyGroupsScreenState extends State<MyGroupsScreen> {
                         Group group = state.groupsLocation[index];
                         return GestureDetector(
                           onTap: () {
-                            pushPage(context: context, page: GroupDetailsScreen(groupId: group.id));
+                            // pushPage(context: context, page: GroupDetailsScreen(groupId: group.id));
                           },
                           child: Padding(
                             padding: const EdgeInsets.only(bottom: 10),

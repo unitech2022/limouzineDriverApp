@@ -29,7 +29,7 @@ class PolicyScreen extends StatelessWidget {
           child: AppBarHome(
             title: Strings.policy,
             onTap: () {
-              _scaffoldKey.currentState!.openEndDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
             child: Container(
               margin: EdgeInsets.all(12),

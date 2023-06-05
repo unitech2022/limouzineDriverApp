@@ -1,3 +1,4 @@
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -7,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-
 import 'package:limousine_driver/persentaion/controller/app_cubit/cubit/app_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/auth_cubit/auth_cubit.dart';
 import 'package:limousine_driver/persentaion/controller/driver_cubit/driver_cubit.dart';
@@ -16,6 +16,9 @@ import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.da
 import 'package:limousine_driver/persentaion/ui/badges_screen/badges_screen.dart';
 import 'package:limousine_driver/persentaion/ui/chose_lang_screen/chose_screen.dart';
 import 'package:limousine_driver/persentaion/ui/edit_account_screen/edit_account_screen.dart';
+import 'package:limousine_driver/persentaion/ui/external_details_screen/external_trip_detials_screen.dart';
+import 'package:limousine_driver/persentaion/ui/external_trip_screen/add_external_trip_screen.dart';
+import 'package:limousine_driver/persentaion/ui/external_trip_screen/external_trip_screen.dart';
 import 'package:limousine_driver/persentaion/ui/history_screen/history_screen.dart';
 import 'package:limousine_driver/persentaion/ui/home_screen/home_screen.dart';
 import 'package:limousine_driver/persentaion/ui/login_screen/login_screen.dart';
@@ -36,24 +39,24 @@ import 'core/services/services_locator.dart';
 import 'core/thems/them.dart';
 import 'persentaion/ui/account_screen/account_screen.dart';
 
-Future<void> _messageHandler(RemoteMessage message) async {
-
-}
+Future<void> _messageHandler(RemoteMessage message) async {}
 AndroidNotificationChannel? channel =
-AndroidNotificationChannel("key1", "chat");
+    AndroidNotificationChannel("key1", "chat");
 
 /// Initialize the [FlutterLocalNotificationsPlugin] package.
 FlutterLocalNotificationsPlugin? flutterLocalNotificationsPlugin =
-FlutterLocalNotificationsPlugin();
+    FlutterLocalNotificationsPlugin();
 void main() async {
   ServicesLocator().init();
   WidgetsFlutterBinding.ensureInitialized();
-    await Firebase.initializeApp();
+  await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
   await readToken();
-   await getLocation();
-    FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  await getLocation();
+  FirebaseMessaging.onBackgroundMessage(_messageHandler);
   FirebaseMessaging.onMessageOpenedApp;
+
+  // initLocalNotification();
   runApp(
     EasyLocalization(
         supportedLocales: const [Locale("ar"), Locale("en")],
@@ -64,6 +67,24 @@ void main() async {
         child: const MyApp()),
   );
 }
+
+// void initLocalNotification() {
+//   AwesomeNotifications().initialize('resource://drawable/logo', [
+//     NotificationChannel(
+//       channelKey: 'limozin',
+//       channelName: 'limozin',
+//       channelDescription: "Notification nawte",
+//       defaultColor: Colors.transparent,
+//       ledColor: Colors.blue,
+//       channelShowBadge: true,
+
+//       importance: NotificationImportance.High,
+//       // playSound: true,
+//       // enableLights:true,
+//       // enableVibration: false
+//     )
+//   ]);
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -87,10 +108,9 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) => sl<AuthCubit>()),
         BlocProvider<DriverCubit>(
             create: (BuildContext context) => sl<DriverCubit>()),
-            
         BlocProvider<TripCubit>(
             create: (BuildContext context) => sl<TripCubit>()),
-             BlocProvider<NotificationsCubit>(
+        BlocProvider<NotificationsCubit>(
             create: (BuildContext context) => sl<NotificationsCubit>()),
       ],
       child: BlocBuilder<AppCubit, AppState>(
@@ -115,13 +135,14 @@ class MyApp extends StatelessWidget {
               badges: (context) => BadgesScreen(),
               trip: (context) => TripScreen(),
               policy: (context) => PolicyScreen(),
-              welcome:(context) => WelcomeScreen(),
-             lang:(context) => ChoseLangScreen(),
-             signUp:(context) => CreateAccountDriverScreen(),
+              welcome: (context) => WelcomeScreen(),
+              lang: (context) => ChoseLangScreen(),
+              signUp: (context) => CreateAccountDriverScreen(),
               // subscription:(context) => SubscriptionsScreen(),
               settings: (context) => SettingsScreen(),
               support: (context) => SupportScreen(),
-               externalTrip: (context) => MyGroupsScreen(),
+              externalTrip: (context) => ExternalTripScreen(),
+              // addExternalTrip: (context) => AddExternalTripScreen(),
             },
           );
         },

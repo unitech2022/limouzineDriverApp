@@ -23,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
-      endDrawer: DrawerWidget(
+      drawer: DrawerWidget(
         scaffoldKey: _scaffoldKey,
       ),
       appBar: PreferredSize(
@@ -31,7 +31,7 @@ class SettingsScreen extends StatelessWidget {
           child: AppBarHome(
             title: Strings.sittings,
             onTap: () {
-              _scaffoldKey.currentState!.openEndDrawer();
+              _scaffoldKey.currentState!.openDrawer();
             },
             child: Container(
               margin: EdgeInsets.all(12),

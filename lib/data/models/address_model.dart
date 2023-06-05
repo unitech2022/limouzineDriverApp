@@ -3,8 +3,8 @@ class AddressModel {
   String? userId;
   bool? defaultAddress;
   double? lat;
-  int? lang;
-  Null? label;
+  double? lang;
+  String? label;
   String? createdAt;
 
   AddressModel(

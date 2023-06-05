@@ -12,7 +12,7 @@ import '../../../core/widgets/texts.dart';
 import '../../controller/trip_cubit/trip_cubit.dart';
 import '../home_screen/components/app_bar_home.dart';
 import '../home_screen/components/container_details_trip.dart';
-import '../home_screen/components/container_point_widget.dart';
+
 import '../home_screen/components/drawer_widget.dart';
 import '../notifications_screen/notifications_screen.dart';
 

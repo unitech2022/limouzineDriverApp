@@ -1,7 +1,7 @@
 class ApiConstants {
   // static const baseUrl ="";
-//  static const baseUrl = "http://8c76-154-183-216-173.ngrok-free.app";
-   static const baseUrl = "https://Limousine.urapp.site";
+ //static const baseUrl = "http://2a4b-154-183-215-82.ngrok-free.app";
+ static const baseUrl = "https://Limousine.urapp.site";
   static const baseUrlImages = "$baseUrl/images/";
   static const checkUserPath = "$baseUrl/check-username";
   static const loginPath = "$baseUrl/user-login";
@@ -25,7 +25,7 @@ class ApiConstants {
   static const updateDriverPath = "$baseUrl/driver/update-driver";
 
   static const getDriverByIDPath = "$baseUrl/driver/get-driver-by-id?driverId=";
-static const getGroupDetails = "$baseUrl/group/get-group-Details?groupId=";
+static const getGroupDetails = "$baseUrl/extrips/get-external-trip-Details";
 
   static const getNotificationsPath =
       "$baseUrl/notification/get-notifications?UserId=";

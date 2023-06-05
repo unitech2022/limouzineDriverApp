@@ -1,34 +1,27 @@
-
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../persentaion/ui/login_screen/login_screen.dart';
 import '../utlis/app_model.dart';
-
-
-
-
-
 
 printFunction(message) {
   // ignore: avoid_print
   print(message);
 }
 
-
-
 replacePage({context, page}) {
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => page));
 }
 
-
-late String currentLocation="";
+late String currentLocation = "";
 LocationData locData = LocationData.fromMap({});
 Future getLocation() async {
-  Location location =  Location();
+  Location location = Location();
   bool serviceEnabled;
   PermissionStatus permissionGranted;
   serviceEnabled = await location.serviceEnabled();
@@ -49,49 +42,43 @@ Future getLocation() async {
 
   locData = await location.getLocation();
   print("${locData.latitude} lat:${locData.longitude} LNG:");
-  
-
 }
 
-bool isLogin(){
-
+bool isLogin() {
   return AppModel.token != "";
 }
 
-
-
 readToken() async {
   // await getBaseUrl();
-  const storage =  FlutterSecureStorage();
+  const storage = FlutterSecureStorage();
   try {
-
-    AppModel.lang=(await storage.read(key: "lang"))!;
+    AppModel.lang = (await storage.read(key: "lang"))!;
     currentUser.token = (await storage.read(key: "token"))!;
-    currentUser.id=( await storage.read(key: "id"));
-    currentUser.role=( await storage.read(key: "role"));
-    currentUser.fullName=( await storage.read(key: "name"));
-    currentUser.profileImage=( await storage.read(key: "image"));
+    currentUser.id = (await storage.read(key: "id"));
+    currentUser.role = (await storage.read(key: "role"));
+    currentUser.fullName = (await storage.read(key: "name"));
+    currentUser.profileImage = (await storage.read(key: "image"));
     printFunction("token : ${currentUser.id!}");
   } catch (e) {}
 }
+
 //
 isRegistered() {
-  return ( currentUser.token != "");
+  return (currentUser.token != "");
 }
 
 saveToken() {
-  const storage =  FlutterSecureStorage();
-  storage.write(key: 'token', value:  currentUser.token);
+  const storage = FlutterSecureStorage();
+  storage.write(key: 'token', value: currentUser.token);
   storage.write(key: 'id', value: currentUser.id);
   storage.write(key: 'role', value: currentUser.role);
   storage.write(key: 'image', value: currentUser.profileImage);
   storage.write(key: 'name', value: currentUser.fullName);
 }
-saveData(key , value) async{
-  const storage =  FlutterSecureStorage();
-  storage.write(key: key, value:  value);
 
-
+saveData(key, value) async {
+  const storage = FlutterSecureStorage();
+  storage.write(key: key, value: value);
 }
 
 // late String currentLocal;
@@ -126,9 +113,8 @@ signOut({ctx}) async {
   currentUser.token = "";
   await storage.delete(key: "token");
   // await storage.delete(key: "id");
-  replacePage(context: ctx, page:  LoginScreen());
+  replacePage(context: ctx, page: LoginScreen());
 }
-
 
 // int createUniqueId() {
 //   return DateTime.now().millisecondsSinceEpoch.remainder(100000);
@@ -140,25 +126,44 @@ signOut({ctx}) async {
 //     throw 'Could not launch $url';
 //   }
 // }
- 
 
-showSnakeBar({context,message}){
+showSnakeBar({context, message, color = Colors.red}) {
   final snackBar = SnackBar(
-    content:  Text(message,style: TextStyle(fontSize: 12,color: Colors.white),),
-    backgroundColor: Colors.red,
-   
+    duration: Duration(milliseconds: 300),
+    content: Text(
+      message,
+      style: TextStyle(fontSize: 12, color: Colors.white),
+    ),
+    backgroundColor:color,
     action: SnackBarAction(
       label: '',
-      textColor:Colors.transparent,
-      onPressed: () {
-
-      },
+      textColor: Colors.transparent,
+      onPressed: () {},
     ),
   );
   ScaffoldMessenger.of(context).showSnackBar(snackBar);
 }
 
+openGoogleMapLocation({lat, lng}) async {
+  String mapOptions = [
+    'saddr=${locData.latitude},${locData.longitude}',
+    'daddr=$lat,$lng',
+    'dir_action=navigate'
+  ].join('&');
 
+  String url = 'https://www.google.com/maps?$mapOptions';
+  if (await canLaunchUrl(Uri.parse(url))) {
+    await launchUrl(Uri.parse(url),mode: LaunchMode.externalApplication);
+  } else {
+    throw 'Could not launch $url';
+  }
+}
+
+
+String formate(dateTime){
+  return DateFormat('dd-MMM-yyyy  HH:mm')
+                                    .format(dateTime).toString();
+}
 // Future showDialogAction(BuildContext context,bool load,{name,type,onTap}) async {
 //   showDialog(
 //     context: context,

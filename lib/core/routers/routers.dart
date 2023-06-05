@@ -25,6 +25,8 @@ const support = "/support";
 const welcome = "/welcome";
 const lang = "/lang";
 const externalTrip = "/externalTrip";
+const addExternalTrip = "/addExternalTrip";
+
 
 
 

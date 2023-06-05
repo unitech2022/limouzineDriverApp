@@ -16,6 +16,7 @@ import 'package:limousine_driver/core/utlis/enums.dart';
 
 import 'package:limousine_driver/core/widgets/loading_widget.dart';
 import 'package:limousine_driver/persentaion/controller/trip_cubit/trip_cubit.dart';
+import '../../../core/helpers/helper_functions.dart';
 import '../../../core/utlis/strings.dart';
 
 import 'components/app_bar_home.dart';
@@ -49,8 +50,8 @@ class _HomeScreenState extends State<HomeScreen> {
     print(locData.latitude.toString() + "  userId");
     TripCubit.get(context)
         .updateDeviceToken(userId: currentUser.id, token: AppModel.deviceToken);
-    TripCubit.get(context).homeTrip(
-      context: context,
+    TripCubit.get(context).homeTrip2(
+        context: context,
         userId: currentUser.id!,
         lat: locData.latitude,
         lng: locData.longitude,
@@ -69,10 +70,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<TripCubit, TripState>(
       builder: (context, state) {
-        return state.homeState == RequestState.loading
+        return state.homeState == RequestState.loaded
             ? Scaffold(
-                body: LoadingWidget(height: double.infinity, color: homeColor))
-            : Scaffold(
                 key: _scaffoldKey,
                 drawer: DrawerWidget(
                   scaffoldKey: _scaffoldKey,
@@ -121,7 +120,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: ItemCurrentTrip(state.responseHome!)),
                         )
                       : SizedBox(),
-                      
                   Align(
                     alignment: Alignment.topCenter,
                     child: Padding(
@@ -131,7 +129,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   )
-                      
+
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: [
@@ -158,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   // sizedHeight(18),
                   // // list Orders
-                      
+
                   // Row(
                   //   children: [
                   //     ContainerTabWidget(
@@ -186,7 +184,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // ),
                   // sizedHeight(11),
                   //List
-                      
+
                   // index == Strings.showList
                   //     ? ListCurrentOrders()
                   //     : SizedBox(
@@ -200,17 +198,27 @@ class _HomeScreenState extends State<HomeScreen> {
                   //           ),
                   //         )),
                   // button refresh page
-                  ,Align(
+                  ,
+                  Align(
                     alignment: Alignment.topCenter,
-                    child: IconButton(icon: Icon(Icons.refresh,color: homeColor,size: 30,),onPressed: () {
-                         TripCubit.get(context).homeTrip(
-                              userId: currentUser.id!,
-                              lat: locData.latitude,
-                              lng: locData.longitude,
-                              address: "currentLocation");
-                    },),
+                    child: IconButton(
+                      icon: Icon(
+                        Icons.refresh,
+                        color: homeColor,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        TripCubit.get(context).homeTrip2(
+                            userId: currentUser.id!,
+                            lat: locData.latitude,
+                            lng: locData.longitude,
+                            address: "currentLocation");
+                      },
+                    ),
                   )
-                ]));
+                ]))
+            : Scaffold(
+                body: LoadingWidget(height: double.infinity, color: homeColor));
       },
     );
   }
@@ -226,30 +234,28 @@ class _HomeScreenState extends State<HomeScreen> {
 
       // NotifyAowsome(notification!.title!,notification.body!);
       if (notification != null && android != null && !kIsWeb) {
-           print("senedddd ========> send");
-           
-        TripCubit.get(context).homeTrip(
+        print("senedddd ========> send");
+
+        TripCubit.get(context).homeTrip2(
             userId: currentUser.id!,
             lat: locData.latitude,
             lng: locData.longitude,
             address: "currentLocation");
-        // AwesomeNotifications().createNotification(
-        //
-        //     content: NotificationContent(
+
+        showNotification(title: notification.title, body: notification.body);
+        //  AwesomeNotifications().createNotification(
+        //         content: NotificationContent(
         //       id: createUniqueId(),
-        //
-        //       color: homeColor,
-        //       icon: 'resource://drawable/ic_launcher',
-        //
-        //       channelKey: 'key1',
-        //       title:
-        //       '${Emojis.money_money_bag + Emojis.plant_cactus}${notification.title}',
+
+        //       color: Colors.green,
+
+        //       channelKey: 'limozin',
+        //       title: notification.title,
         //       body: notification.body,
-        //       bigPicture: "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885__480.jpg",
+
         //       notificationLayout: NotificationLayout.BigPicture,
         //       // largeIcon: "asset://assets/images/logo_final.png"
         //     ));
-
         // AwesomeNotifications().initialize(
         //     "asset://assets/images/logo_final",
         //     [
@@ -289,5 +295,8 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+int createUniqueId() {
+  return DateTime.now().millisecondsSinceEpoch.remainder(100000);
+}
 
 //  

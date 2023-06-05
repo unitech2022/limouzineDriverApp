@@ -96,24 +96,24 @@ class DrawerWidget extends StatelessWidget {
                             shape: BoxShape.circle,
                             border: Border.all(color: textColor, width: 3)),
                       )),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: Container(
-                      alignment: Alignment.center,
-                      height: 25,
-                      width: 70,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(color: textColor, width: 3),
-                          color: Color(0xff28436C)),
-                      child: Texts(
-                          title: "المستوي : 11",
-                          textColor: Colors.white,
-                          fontSize: 9,
-                          weight: FontWeight.normal,
-                          align: TextAlign.center),
-                    ),
-                  )
+                  // Align(
+                  //   alignment: Alignment.bottomCenter,
+                  //   child: Container(
+                  //     alignment: Alignment.center,
+                  //     height: 25,
+                  //     width: 70,
+                  //     decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(30),
+                  //         border: Border.all(color: textColor, width: 3),
+                  //         color: Color(0xff28436C)),
+                  //     child: Texts(
+                  //         title: "المستوي : 11",
+                  //         textColor: Colors.white,
+                  //         fontSize: 9,
+                  //         weight: FontWeight.normal,
+                  //         align: TextAlign.center),
+                  //   ),
+                  // )
                 ],
               ),
             ),
@@ -141,15 +141,15 @@ class DrawerWidget extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Texts(
-                        title: "الحالة :  ",
+                        title: "الحالة : ".tr(),
                         textColor: Color(0xff82B4FF),
                         fontSize: 10,
                         weight: FontWeight.normal,
                         align: TextAlign.start),
                     Texts(
                         title: TripCubit.get(context).statusDriver
-                            ? " انلاين"
-                            : " اوفلاين",
+                            ? "أونلاين".tr()
+                            : "اوفلاين".tr(),
                         textColor: Color.fromARGB(255, 19, 224, 60),
                         fontSize: 10,
                         weight: FontWeight.normal,
@@ -368,7 +368,7 @@ class DrawerWidget extends StatelessWidget {
         sizedHeight(25),
         ItemMenu(
           text: Strings.privacy.tr(),
-          icon: "assets/icons/aboute.svg",
+          icon: "assets/icons/help.svg",
           child: const SizedBox(),
           onTap: () {
             Navigator.pushNamed(context, policy);
