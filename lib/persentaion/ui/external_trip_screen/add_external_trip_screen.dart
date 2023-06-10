@@ -212,7 +212,7 @@ class _AddExternalTripScreenState extends State<AddExternalTripScreen> {
                     onTap: () {
                       showDateTimePicker2(context, onConfirm: (dateTime) {
                         final date =
-                            DateFormat('dd-MM-yyyy  HH:mm a').format(dateTime);
+                            DateFormat('dd-MM-yyyy  HH:mm a',"en").format(dateTime);
                         print(date);
                         TripCubit.get(context).setTimeTrip(date.toString(), 0);
                         pop(context);
@@ -264,7 +264,7 @@ class _AddExternalTripScreenState extends State<AddExternalTripScreen> {
                     onTap: () {
                       showDateTimePicker2(context, onConfirm: (dateTime) {
                         final date =
-                            DateFormat('dd-MM-yyyy  HH:mm a')
+                            DateFormat('dd-MM-yyyy  HH:mm a',"en")
                                 .format(dateTime);
                         TripCubit.get(context).setTimeTrip(date.toString(), 1);
 

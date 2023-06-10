@@ -199,7 +199,7 @@ class ListBookingWidget extends StatelessWidget {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 SizedBox(
-                                  width: 100,
+                                
                                   child: Text(
                                     'رقم الهاتف'.tr(),
                                     style: TextStyle(
@@ -212,7 +212,7 @@ class ListBookingWidget extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  width: 20,
+                                  width: 10,
                                 ),
                                 Text(
                                   bookingsResponse.userDetail!.userName!,
@@ -423,7 +423,7 @@ class DetailsTripWedgit extends StatelessWidget {
 
                     RowDetailsTrip(
                       title: "تاريخ الرحلة".tr(),
-                      value: externalTrip.startingAt,
+                      value: externalTrip.startingAt.split("T")[0]+ " -- " + externalTrip.startingAt.split("T")[1],
                       child: SizedBox(),
                     ),
                     SizedBox(height: 5,),

@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:limousine_driver/core/helpers/helper_functions.dart';
 import 'package:limousine_driver/core/styles/colors.dart';
 import 'package:limousine_driver/data/models/history_response.dart';
+import 'package:limousine_driver/persentaion/ui/details_trip_screen/details_trip_screen.dart';
 import '../../../core/utlis/enums.dart';
 import '../../../core/utlis/strings.dart';
 import '../../../core/widgets/loading_widget.dart';
@@ -101,9 +102,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                             containerColor:
                                 index == 2 ? homeColor : Colors.transparent,
                             onTap: () {
-                             setState(() {
+                              setState(() {
                                 index = 2;
-                             });
+                              });
                             },
                           ),
                         ],
@@ -113,9 +114,15 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     // list Of history
                     ,
                     Expanded(
-                      child: index == 1 ? DoneTripsList(
-                        status: 1,list: state.histories!.doneTrips!,
-                      ) : DoneTripsList(status: 2,list: state.histories!.canceledTrips!,),
+                      child: index == 1
+                          ? DoneTripsList(
+                              status: 1,
+                              list: state.histories!.doneTrips!,
+                            )
+                          : DoneTripsList(
+                              status: 2,
+                              list: state.histories!.canceledTrips!,
+                            ),
                     )
                   ]),
                 ),
@@ -133,97 +140,109 @@ class DoneTripsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return list.isEmpty? ListEmptyWidget(
-                          title: Strings.notTrips.tr(),
-                          textColor: homeColor,
-                        ): ListView.builder(
-        itemCount: list.length,
-        itemBuilder: (context, index) {
-          HistoryModel historyModel = list[index];
-          return ItemListHistory(historyModel,status);
-        });
+    return list.isEmpty
+        ? ListEmptyWidget(
+            title: Strings.notTrips.tr(),
+            textColor: homeColor,
+          )
+        : ListView.builder(
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              HistoryModel historyModel = list[index];
+              return ItemListHistory(historyModel, status);
+            });
   }
 }
 
 class ItemListHistory extends StatelessWidget {
- final HistoryModel historyModel;
+  final HistoryModel historyModel;
   final int status;
-  const ItemListHistory(this.historyModel,this.status);
+  const ItemListHistory(this.historyModel, this.status);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(14),
-      margin: EdgeInsets.only(bottom: 13),
-      decoration: BoxDecoration(
-          color:status==1? Color(0xffFFF9EC):Color.fromARGB(255, 242, 221, 227), borderRadius: BorderRadius.circular(8)),
-      child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SvgPicture.asset("assets/icons/airport.svg"),
-            sizedWidth(13),
-            Expanded(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Texts(
-                          title: Strings.numberOrder.tr() + ": " + historyModel.trip!.id.toString(),
-                          textColor: Color(0xffA5A5A5),
-                          fontSize: 12,
-                          weight: FontWeight.bold,
-                          align: TextAlign.start),
-                      Texts(
-                          title:historyModel.trip!.createdAt.split("T")[0],
-                          textColor: Colors.black,
-                          fontSize: 12,
-                          weight: FontWeight.bold,
-                          align: TextAlign.start)
-                    ],
-                  ),
-                  sizedHeight(3),
-                  Divider(
-                    height: .8,
-                  ),
-                  ContainerDetailsTrip(
-                    icon: "assets/icons/wallet.svg",
-                    label: Strings.cost.tr(),
-                    textColor: Colors.black,
-                    value1: historyModel.trip!.price.toString(),
-                    value2: "ر.س",
-                    value3: "كاش",
-                  ),
-                  ContainerDetailsTrip(
-                    icon: "assets/icons/history_home.svg",
-                    label: Strings.timeTrip.tr(),
-                    textColor: Colors.black,
-                    value1: "45",
-                    value2: "دقيقة",
-                    value3: "12  كم",
-                  ),
-                  sizedHeight(12),
-                  ContainerStartingPointWidget(
-                    value:
-                       historyModel.trip!.startAddress,
-                    label: Strings.startPoint.tr(),
-                    color: buttonsColor,
-                  ),
-                  sizedHeight(15),
-                  ContainerStartingPointWidget(
-                    value:
-                         historyModel.trip!.endAddress,
-                    label: Strings.endPoint.tr(),
-                    color: Color(0xff88D55F),
-                  ),
-                ],
+    return GestureDetector(
+      onTap: () {
+        pushPage(
+            context: context,
+            page: DetailsTripScreen(historyModel: historyModel));
+      },
+      child: Container(
+        padding: EdgeInsets.all(14),
+        margin: EdgeInsets.only(bottom: 13),
+        decoration: BoxDecoration(
+            color: status == 1
+                ? Color(0xffFFF9EC)
+                : Color.fromARGB(255, 242, 221, 227),
+            borderRadius: BorderRadius.circular(8)),
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SvgPicture.asset("assets/icons/airport.svg"),
+              sizedWidth(13),
+              Expanded(
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Texts(
+                            title: Strings.numberOrder.tr() +
+                                ": " +
+                                historyModel.trip!.id.toString(),
+                            textColor: Color(0xffA5A5A5),
+                            fontSize: 12,
+                            weight: FontWeight.bold,
+                            align: TextAlign.start),
+                        Texts(
+                            title: historyModel.trip!.createdAt.split("T")[0],
+                            textColor: Colors.black,
+                            fontSize: 12,
+                            weight: FontWeight.bold,
+                            align: TextAlign.start)
+                      ],
+                    ),
+                    sizedHeight(3),
+                    Divider(
+                      height: .8,
+                    ),
+                    ContainerDetailsTrip(
+                      icon: "assets/icons/wallet.svg",
+                      label: Strings.cost.tr(),
+                      textColor: Colors.black,
+                      value1: historyModel.trip!.price.toString(),
+                      value2: "ر.س",
+                      value3: "كاش",
+                    ),
+                    ContainerDetailsTrip(
+                      icon: "assets/icons/history_home.svg",
+                      label: Strings.timeTrip.tr(),
+                      textColor: Colors.black,
+                      value1: "45",
+                      value2: "دقيقة",
+                      value3: "12  كم",
+                    ),
+                    sizedHeight(12),
+                    ContainerStartingPointWidget(
+                      value: historyModel.trip!.startAddress,
+                      label: Strings.startPoint.tr(),
+                      color: buttonsColor,
+                    ),
+                    sizedHeight(15),
+                    ContainerStartingPointWidget(
+                      value: historyModel.trip!.endAddress,
+                      label: Strings.endPoint.tr(),
+                      color: Color(0xff88D55F),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
-        ),
-      ]),
+            ],
+          ),
+        ]),
+      ),
     );
   }
 }
