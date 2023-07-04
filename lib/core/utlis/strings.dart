@@ -15,7 +15,7 @@ class Strings {
   static const String loginOrSignUp = "تسجيل الدخول / التسجيل";
   static const String gust = "الاستمرار كضيف";
   static const String loginTitle = "تسجيل الدخول للحساب";
-  static const String login1 = "تسجيل ";
+  static const String login1 = "تسجيل";
   static const String login2 = "الدخول للحساب";
  static const String configDelete = "هل أنت متأكد أنك تريد حذف الحساب ؟";
 
@@ -99,7 +99,7 @@ class Strings {
   static const String downloadInvoice = "تحميل الفاتورة";
   static const String repetition = "تكرار";
   static const String share = "مشاركة";
-    static const String shareApp = " مشاركةالتطبيق";
+    static const String shareApp = "مشاركةالتطبيق";
   static const String subscribeNow = "اشترك الان";
   static const String selectDestinations = "حدد الوجهات";
   static const String numberOfStudents = "عدد الطلاب";
@@ -133,7 +133,7 @@ class Strings {
 
   static const String settings = "الاعدادات";
   static const String descSettings =
-      " بعض الاعدادات العامة المتعقلة بتجربةاستخدامك للتطبيق  بشكل عام";
+      "بعض الاعدادات العامة المتعقلة بتجربةاستخدامك للتطبيق  بشكل عام";
   static const String personalInformation = "المعلومات الشخصية";
   static const String updatingInfo = "قم بتعديل بيانات الخاصة من هنا";
   static const String password = "كلمة المرور";

@@ -11,6 +11,7 @@ import '../../../core/utlis/api_constatns.dart';
 import '../../../core/utlis/app_model.dart';
 import '../../../core/utlis/enums.dart';
 import '../../../data/models/user_response.dart';
+import '../../../data/models/wallet_response.dart';
 import '../../../domin/entities/response_login.dart';
 import '../../../domin/entities/response_signup.dart';
 import '../../../domin/entities/user.dart';
@@ -196,6 +197,32 @@ class AuthCubit extends Cubit<AuthState> {
     } else {
       print(response.reasonPhrase);
       emit(state.copyWith(updateUserState: RequestState.error));
+    }
+  }
+
+
+  Future getWallets() async {
+    emit(state.copyWith(getWalletsState: RequestState.loading));
+
+    var request =
+        http.MultipartRequest('GET', Uri.parse(ApiConstants.getWallets));
+
+    request.fields.addAll({'userId': currentUser.id!});
+
+    http.StreamedResponse response = await request.send();
+
+    print(response.statusCode.toString() + "getWallets");
+    if (response.statusCode == 200) {
+      String jsonsDataString = await response.stream.bytesToString();
+      final jsonData = jsonDecode(jsonsDataString);
+
+      emit(state.copyWith(
+          getWalletsState: RequestState.loaded,
+          walletResponse: WalletResponse.fromJson(jsonData)));
+      getUserDetails();
+    } else {
+      // print(response.reasonPhrase);
+      emit(state.copyWith(getWalletsState: RequestState.loading));
     }
   }
 

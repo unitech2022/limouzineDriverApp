@@ -98,7 +98,7 @@ class _ExternalTripDetailsScreenState extends State<ExternalTripDetailsScreen> {
   }
 }
 
-class ListBookingWidget extends StatelessWidget {
+class ListBookingWidget extends StatefulWidget {
   final List<BookingsResponse> bookings;
    ListBookingWidget({
     super.key,
@@ -106,15 +106,20 @@ class ListBookingWidget extends StatelessWidget {
   });
 
   @override
+  State<ListBookingWidget> createState() => _ListBookingWidgetState();
+}
+
+class _ListBookingWidgetState extends State<ListBookingWidget> {
+  @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top: 30, left: 11, right: 11, bottom: 20),
-      child: bookings.isEmpty
+      child: widget.bookings.isEmpty
           ? ListEmptyWidget(textColor: Colors.black, title: "لا توجد حجوزات".tr())
           : ListView.builder(
-              itemCount: bookings.length,
+              itemCount: widget.bookings.length,
               itemBuilder: (ctx, index) {
-                BookingsResponse bookingsResponse = bookings[index];
+                BookingsResponse bookingsResponse = widget.bookings[index];
                 return Container(
                     padding: const EdgeInsets.all(11),
                     margin: EdgeInsets.only(bottom: 5),

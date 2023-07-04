@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
@@ -8,11 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_cupertino_datetime_picker/flutter_cupertino_datetime_picker.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:limousine_driver/core/routers/routers.dart';
 import 'package:limousine_driver/core/utlis/app_model.dart';
-import 'package:location/location.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';
-
 import '../../data/models/city_model.dart';
 import '../styles/colors.dart';
 import '../utlis/strings.dart';

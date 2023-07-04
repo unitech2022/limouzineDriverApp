@@ -26,6 +26,7 @@ const welcome = "/welcome";
 const lang = "/lang";
 const externalTrip = "/externalTrip";
 const addExternalTrip = "/addExternalTrip";
+const wallet = "/wallet";
 
 
 

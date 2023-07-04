@@ -2,8 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:limousine_driver/core/helpers/helper_functions.dart';
-import 'package:limousine_driver/core/routers/routers.dart';
-import 'package:limousine_driver/core/utlis/data.dart';
+
 import 'package:limousine_driver/data/models/city_model.dart';
 import 'package:limousine_driver/data/models/external_trip.dart';
 import '../../../core/styles/colors.dart';

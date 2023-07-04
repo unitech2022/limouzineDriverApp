@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 import '../../../../core/helpers/helper_functions.dart';
+import '../../../../core/styles/colors.dart';
 import '../../../../core/widgets/texts.dart';
 
 class ItemMenu extends StatelessWidget {
@@ -22,8 +23,12 @@ class ItemMenu extends StatelessWidget {
       onTap: onTap,
       child: Row(
         children: [
-          SvgPicture.asset(icon,height:20 ,width: 20,fit: BoxFit.cover,),
-          sizedWidth(18),
+            SizedBox(
+       
+            child: SizedBox(
+              width: 20,height: 25,
+              child: SvgPicture.asset(icon,width: 25,height: 25,color: textColor,))),
+        sizedWidth(18),
           Texts(
               title: text,
               textColor: Colors.white,

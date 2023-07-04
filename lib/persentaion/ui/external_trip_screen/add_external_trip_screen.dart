@@ -21,7 +21,7 @@ import '../../controller/trip_cubit/trip_cubit.dart';
 import '../home_screen/components/drawer_widget.dart';
 
 class AddExternalTripScreen extends StatefulWidget {
-  ExternalTrip? externalTrip;
+ final ExternalTrip? externalTrip;
   final int type; //  0 =  add  , 1 = update
   AddExternalTripScreen({super.key, this.externalTrip, required this.type});
 

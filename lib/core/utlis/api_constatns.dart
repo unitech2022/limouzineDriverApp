@@ -1,6 +1,6 @@
 class ApiConstants {
   // static const baseUrl ="";
- //static const baseUrl = "http://2a4b-154-183-215-82.ngrok-free.app";
+// static const baseUrl = "http://8ce3-154-183-195-164.ngrok-free.app";
  static const baseUrl = "https://Limousine.urapp.site";
   static const baseUrlImages = "$baseUrl/images/";
   static const checkUserPath = "$baseUrl/check-username";
@@ -32,7 +32,8 @@ static const getGroupDetails = "$baseUrl/extrips/get-external-trip-Details";
 
    static const getGroupsPath = "$baseUrl/group/get-groups";
    static const acceptGroup = "$baseUrl/group/accept-group";
-   
+      static const getWallets =
+    "$baseUrl/wallet/get-wallets-by-userId";
   static String imageUrl(path) => baseUrlImages + path;
 
   // local Storage constants

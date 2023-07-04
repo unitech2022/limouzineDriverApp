@@ -231,6 +231,7 @@ class _CreateAccountDriverScreenState extends State<CreateAccountDriverScreen> {
                                   print("heeeeeee");
                                   Driver driver = Driver(
                                       id: 1,
+                                      wallet: 0.0,
                                       userId: currentUser.id!,
                                       lat: 0.0,
                                       lng: 0.0,

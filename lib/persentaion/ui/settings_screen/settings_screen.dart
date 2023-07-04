@@ -29,7 +29,7 @@ class SettingsScreen extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBarHome(
-            title: Strings.sittings,
+            title: Strings.sittings.tr(),
             onTap: () {
               _scaffoldKey.currentState!.openDrawer();
             },
@@ -53,7 +53,7 @@ class SettingsScreen extends StatelessWidget {
             Row(
               children: [
                 Texts(
-                    title: Strings.settings,
+                    title: Strings.settings.tr(),
                     textColor: buttonsColor,
                     fontSize: 31,
                     weight: FontWeight.normal,
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                 SizedBox(
                   width: 280,
                   child: Texts(
-                      title: Strings.descSettings,
+                      title: Strings.descSettings.tr(),
                       textColor: textColor3,
                       fontSize: 16,
                       weight: FontWeight.normal,
@@ -242,8 +242,8 @@ class SettingsScreen extends StatelessWidget {
             CardSettingWidget(
                 onTap: () {},
                 icon: "assets/icons/share2.svg",
-                title: Strings.shareApp,
-                subTitle: Strings.makeInvinet,
+                title: Strings.shareApp.tr(),
+                subTitle: Strings.makeInvinet.tr(),
                 child: Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: textColor3,
@@ -252,8 +252,8 @@ class SettingsScreen extends StatelessWidget {
             CardSettingWidget(
                 onTap: () {},
                 icon: "assets/icons/rating.svg",
-                title: Strings.rateApp,
-                subTitle: Strings.onApple,
+                title: Strings.rateApp.tr(),
+                subTitle: Strings.onApple.tr(),
                 child: Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: textColor3,
@@ -263,8 +263,8 @@ class SettingsScreen extends StatelessWidget {
             CardSettingWidget(
                 onTap: () {},
                 icon: "assets/icons/document.svg",
-                title: Strings.uses,
-                subTitle: Strings.praivcy,
+                title: Strings.uses.tr(),
+                subTitle: Strings.praivcy.tr(),
                 child: Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: textColor3,
@@ -284,8 +284,8 @@ class SettingsScreen extends StatelessWidget {
                   children: [
                     SvgPicture.asset("assets/icons/logout2.svg"),
                     sizedWidth(24),
-                    const Texts(
-                        title: Strings.logout,
+                     Texts(
+                        title: Strings.logout.tr(),
                         textColor: Colors.white,
                         fontSize: 14,
                         weight: FontWeight.normal,
@@ -298,7 +298,7 @@ class SettingsScreen extends StatelessWidget {
                 showDialogDeleteAccount(
                     context: context,
                     title: Strings.deleteAccount.tr(),
-                    body: Strings.configDelete,
+                    body: Strings.configDelete.tr(),
                     founction: () {
                       pop(context);
                       signOut(ctx: context);
@@ -318,8 +318,8 @@ class SettingsScreen extends StatelessWidget {
                 children: [
                   SvgPicture.asset("assets/icons/delete2.svg"),
                   sizedWidth(24),
-                  const Texts(
-                      title: Strings.deleteAccount,
+                   Texts(
+                      title: Strings.deleteAccount.tr(),
                       textColor: Colors.red,
                       fontSize: 14,
                       weight: FontWeight.bold,

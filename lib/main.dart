@@ -38,6 +38,7 @@ import 'core/routers/routers.dart';
 import 'core/services/services_locator.dart';
 import 'core/thems/them.dart';
 import 'persentaion/ui/account_screen/account_screen.dart';
+import 'persentaion/ui/my_walet_screen/my_walet_screen.dart';
 
 Future<void> _messageHandler(RemoteMessage message) async {}
 AndroidNotificationChannel? channel =
@@ -59,7 +60,7 @@ void main() async {
   // initLocalNotification();
   runApp(
     EasyLocalization(
-        supportedLocales: const [Locale("ar"), Locale("en")],
+        supportedLocales: const [Locale("ar"), Locale("en"),Locale("ur")],
         path: "assets/translations",
         // <-- change the path of the translation files
         fallbackLocale: const Locale("ar"),
@@ -142,6 +143,7 @@ class MyApp extends StatelessWidget {
               settings: (context) => SettingsScreen(),
               support: (context) => SupportScreen(),
               externalTrip: (context) => ExternalTripScreen(),
+               wallet:(context) => MyWalletScreen()
               // addExternalTrip: (context) => AddExternalTripScreen(),
             },
           );

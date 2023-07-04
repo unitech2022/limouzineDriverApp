@@ -13,19 +13,22 @@ class DriverModel extends Driver {
       required super.carModelId,
       required super.carMakeYear,
       required super.status,
-      required super.createdAt});
+      required super.createdAt,
+      required super.wallet});
 
   factory DriverModel.fromJson(Map<String, dynamic> json) => DriverModel(
-      id: json["id"],
-      userId: json["userId"],
-      lat: json["lat"].toDouble(),
-      lng: json["lng"].toDouble(),
-      zoneId: json["zoneId"],
-      passport: json["passport"],
-      drivingLicense: json["drivingLicense"],
-      carImage: json["carImage"],
-      carModelId: json["carModelId"],
-      carMakeYear: json["carMakeYear"],
-      status: json["status"],
-      createdAt: json["createdAt"]);
+        id: json["id"],
+        userId: json["userId"],
+        lat: json["lat"].toDouble(),
+        lng: json["lng"].toDouble(),
+        zoneId: json["zoneId"],
+        passport: json["passport"],
+        drivingLicense: json["drivingLicense"],
+        carImage: json["carImage"],
+        carModelId: json["carModelId"],
+        carMakeYear: json["carMakeYear"],
+        status: json["status"],
+        createdAt: json["createdAt"],
+        wallet: json["wallet"].toDouble(),
+      );
 }

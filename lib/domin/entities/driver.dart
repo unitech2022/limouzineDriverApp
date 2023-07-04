@@ -16,6 +16,7 @@ class Driver extends Equatable {
   final int carModelId;
   final String carMakeYear;
   final int status;
+  final double wallet;
   final String createdAt;
 
   Driver(
@@ -30,6 +31,7 @@ class Driver extends Equatable {
       required this.carModelId,
       required this.carMakeYear,
       required this.status,
+      required this.wallet,
       required this.createdAt});
 
   @override
@@ -45,6 +47,7 @@ class Driver extends Equatable {
         carModelId,
         carMakeYear,
         status,
+        wallet,
         createdAt,
       ];
 }

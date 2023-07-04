@@ -142,7 +142,7 @@ class ItemCurrentTrip extends StatelessWidget {
               child: Buttons2(
             onPress: () {
                TripCubit.get(context)
-                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 7,userId:responseHome.trip!.userId );
+                  .changeStatusTrip(tripId: responseHome.trip!.id, status: 8,userId:responseHome.trip!.userId );
             },
             radus: 30,
             height: 42,
@@ -156,11 +156,23 @@ class ItemCurrentTrip extends StatelessWidget {
           )),
         ],
       );
-    } else if (status == 1) {
+    } else if(status == 1){
+
+   return 
+      SizedBox(
+         width: double.infinity,
+        child: Texts(
+            title: "في انتظار اختيار طريقة الدفع".tr(),
+            textColor:homeColor,
+            fontSize: 14,
+            weight: FontWeight.bold,
+            align: TextAlign.center),
+      );
+    }
+     else if (status == 2) {
       return SizedBox(
         width: double.infinity,
         child: MaterialButton(
-          
           color: homeColor,
           child: Texts(
               title: "وصلت".tr(),
@@ -174,11 +186,11 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 2,userId:responseHome.trip!.userId );
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 3,userId:responseHome.trip!.userId );
           },
         ),
       );
-    } else if (status == 2) {
+    } else if (status == 3) {
       return SizedBox(
          width: double.infinity,
         child: Texts(
@@ -188,7 +200,7 @@ class ItemCurrentTrip extends StatelessWidget {
             weight: FontWeight.bold,
             align: TextAlign.center),
       );
-    } else if (status == 3) {
+    } else if (status == 4) {
       return SizedBox(
          width: double.infinity,
         child: MaterialButton(
@@ -205,11 +217,11 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 4,userId:responseHome.trip!.userId );
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 5,userId:responseHome.trip!.userId );
           },
         ),
       );
-    } else if (status == 4) {
+    } else if (status == 5) {
       return SizedBox(
          width: double.infinity,
         child: MaterialButton(
@@ -226,11 +238,11 @@ class ItemCurrentTrip extends StatelessWidget {
           ),
           onPressed: () {
             TripCubit.get(context)
-                .changeStatusTrip(tripId: responseHome.trip!.id, status: 5,userId:responseHome.trip!.userId );
+                .changeStatusTrip(tripId: responseHome.trip!.id, status: 6,userId:responseHome.trip!.userId );
           },
         ),
       );
-    } else if (status == 5) {
+    } else if (status == 6) {
       return SizedBox(
          width: double.infinity,
         child: Texts(

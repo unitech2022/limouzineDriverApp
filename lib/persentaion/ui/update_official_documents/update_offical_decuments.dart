@@ -15,7 +15,7 @@ import '../../../core/utlis/strings.dart';
 import '../../../core/widgets/button_widget.dart';
 import '../../../core/widgets/circle_image_widget.dart';
 import '../../../core/widgets/texts.dart';
-import '../home_screen/components/app_bar_home.dart';
+
 import '../sign_up_screen/steps_sign_screens/offical_screen/components/container_add_photo_widget.dart';
 
 class UpdateOfficialDocuments extends StatefulWidget {
@@ -45,21 +45,85 @@ class _UpdateOfficialDocumentsState extends State<UpdateOfficialDocuments> {
               ? Center(
                   child: LoadingWidget(height: 55, color: homeColor),
                 )
-              : Container(
-                  margin: EdgeInsets.all(20),
-                  child: Column(
-                    children: [
-                      sizedHeight(20),
-                      // passportImage
-                      ContainerAddPhotoWidget(
-                        title: Strings.pasport.tr(),
-                        image: "",
-                        onTap: () {
-                          DriverCubit.get(context).uploadImage(1);
-                          print("ddff");
-                        },
-                        imageWidget:
-                            state.passportImageState == RequestState.loading
+              : SingleChildScrollView(
+                child: Container(
+                    margin: EdgeInsets.all(20),
+                    child: Column(
+                      children: [
+                        sizedHeight(20),
+                        // passportImage
+                        ContainerAddPhotoWidget(
+                          title: Strings.pasport.tr(),
+                          image: "",
+                          onTap: () {
+                            DriverCubit.get(context).uploadImage(1);
+                            print("ddff");
+                          },
+                          imageWidget:
+                              state.passportImageState == RequestState.loading
+                                  ? SizedBox(
+                                      width: 90,
+                                      child: LoadingWidget(
+                                        height: 90,
+                                        color: buttonsColor,
+                                      ),
+                                    )
+                                  : Container(
+                                      height: 90,
+                                      width: 90,
+                                      child: state.passportImage == ""
+                                          ? Image.asset(
+                                              "assets/images/image_person.png")
+                                          : CircleImageWidget(
+                                              height: 80,
+                                              width: 80,
+                                              image: ApiConstants.imageUrl(
+                                                  state.passportImage),
+                                            ),
+                                    ),
+                        ),
+                        Divider(),
+                        //carImage
+                        ContainerAddPhotoWidget(
+                          title: Strings.photoCarDetails.tr(),
+                          image: "",
+                          onTap: () {
+                            DriverCubit.get(context).uploadImage(2);
+                            print("2");
+                          },
+                          imageWidget: state.carImageState == RequestState.loading
+                              ? SizedBox(
+                                  width: 90,
+                                  child: LoadingWidget(
+                                    height: 80,
+                                    color: buttonsColor,
+                                  ),
+                                )
+                              : Container(
+                                  height: 90,
+                                  width: 90,
+                                  child: state.carImage == ""
+                                      ? Image.asset(
+                                          "assets/images/image_person.png")
+                                      : CircleImageWidget(
+                                          height: 80,
+                                          width: 80,
+                                          image: ApiConstants.imageUrl(
+                                              state.carImage!),
+                                        ),
+                                ),
+                        ),
+                        Divider(),
+                        //drivingLicenseImage
+                        ContainerAddPhotoWidget(
+                            title: Strings.photoCar4.tr(),
+                            image: "",
+                            onTap: () {
+                              DriverCubit.get(context).uploadImage(3);
+                              print("3");
+                            },
+                            imageWidget: state.drivingLicenseImageState ==
+                                    RequestState.loading
                                 ? SizedBox(
                                     width: 90,
                                     child: LoadingWidget(
@@ -70,108 +134,46 @@ class _UpdateOfficialDocumentsState extends State<UpdateOfficialDocuments> {
                                 : Container(
                                     height: 90,
                                     width: 90,
-                                    child: state.passportImage == ""
+                                    child: state.drivingLicenseImage == ""
                                         ? Image.asset(
                                             "assets/images/image_person.png")
                                         : CircleImageWidget(
                                             height: 80,
                                             width: 80,
                                             image: ApiConstants.imageUrl(
-                                                state.passportImage),
+                                                state.drivingLicenseImage!),
                                           ),
-                                  ),
-                      ),
-                      Divider(),
-                      //carImage
-                      ContainerAddPhotoWidget(
-                        title: Strings.photoCarDetails.tr(),
-                        image: "",
-                        onTap: () {
-                          DriverCubit.get(context).uploadImage(2);
-                          print("2");
-                        },
-                        imageWidget: state.carImageState == RequestState.loading
-                            ? SizedBox(
-                                width: 90,
-                                child: LoadingWidget(
-                                  height: 80,
-                                  color: buttonsColor,
-                                ),
+                                  )),
+              
+                        sizedHeight(60),
+              
+                        state.updateDriverState == RequestState.loading
+                            ? LoadingWidget(
+                                height: 55,
+                                color: buttonsColor,
                               )
-                            : Container(
-                                height: 90,
-                                width: 90,
-                                child: state.carImage == ""
-                                    ? Image.asset(
-                                        "assets/images/image_person.png")
-                                    : CircleImageWidget(
-                                        height: 80,
-                                        width: 80,
-                                        image: ApiConstants.imageUrl(
-                                            state.carImage!),
-                                      ),
-                              ),
-                      ),
-                      Divider(),
-                      //drivingLicenseImage
-                      ContainerAddPhotoWidget(
-                          title: Strings.photoCar4.tr(),
-                          image: "",
-                          onTap: () {
-                            DriverCubit.get(context).uploadImage(3);
-                            print("3");
-                          },
-                          imageWidget: state.drivingLicenseImageState ==
-                                  RequestState.loading
-                              ? SizedBox(
-                                  width: 90,
-                                  child: LoadingWidget(
-                                    height: 90,
-                                    color: buttonsColor,
-                                  ),
-                                )
-                              : Container(
-                                  height: 90,
-                                  width: 90,
-                                  child: state.drivingLicenseImage == ""
-                                      ? Image.asset(
-                                          "assets/images/image_person.png")
-                                      : CircleImageWidget(
-                                          height: 80,
-                                          width: 80,
-                                          image: ApiConstants.imageUrl(
-                                              state.drivingLicenseImage!),
-                                        ),
-                                )),
-
-                      sizedHeight(60),
-
-                      state.updateDriverState == RequestState.loading
-                          ? LoadingWidget(
-                              height: 55,
-                              color: buttonsColor,
-                            )
-                          : ButtonWidget(
-                              height: 55,
-                              color: homeColor,
-                              onPress: () {
-                                DriverCubit.get(context).updateDriver(
-                                    imageCar: state.carImage,
-                                    imagePass: state.passportImage,
-                                    imageDriving: state.drivingLicenseImage,
-                                    driverId: driver!.id);    
-                              },
-                              child: Texts(
-                                  title: Strings.save.tr(),
-                                  textColor: Colors.white,
-                                  fontSize: 14,
-                                  weight: FontWeight.normal,
-                                  align: TextAlign.center)),
-
-                      sizedHeight(20),
-                    ],
+                            : ButtonWidget(
+                                height: 55,
+                                color: homeColor,
+                                onPress: () {
+                                  DriverCubit.get(context).updateDriver(
+                                      imageCar: state.carImage,
+                                      imagePass: state.passportImage,
+                                      imageDriving: state.drivingLicenseImage,
+                                      driverId: driver!.id);    
+                                },
+                                child: Texts(
+                                    title: Strings.save.tr(),
+                                    textColor: Colors.white,
+                                    fontSize: 14,
+                                    weight: FontWeight.normal,
+                                    align: TextAlign.center)),
+              
+                        sizedHeight(20),
+                      ],
+                    ),
                   ),
-                ),
+              ),
         );
       },
     );

@@ -108,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   state.responseHome!.trip != null &&
-                          state.responseHome!.trip!.status != 7
+                          state.responseHome!.trip!.status != 8
                       ? Align(
                           alignment: Alignment.bottomCenter,
                           child: Container(
@@ -188,7 +188,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   // index == Strings.showList
                   //     ? ListCurrentOrders()
                   //     : SizedBox(
-                  //         height: 300,
+                  //         height: 300,0.....................
                   //         child: GoogleMap(
                   //           zoomControlsEnabled: false,
                   //           onMapCreated: _onMapCreated,

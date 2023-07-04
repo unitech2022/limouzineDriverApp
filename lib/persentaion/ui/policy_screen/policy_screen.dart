@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -27,7 +28,7 @@ class PolicyScreen extends StatelessWidget {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(50.0),
           child: AppBarHome(
-            title: Strings.policy,
+            title: Strings.policy.tr(),
             onTap: () {
               _scaffoldKey.currentState!.openDrawer();
             },
@@ -52,7 +53,7 @@ class PolicyScreen extends StatelessWidget {
               children: [
                 Expanded(
                   child: Texts(
-                      title: Strings.descPolicy,
+                      title: Strings.descPolicy.tr(),
                       textColor: buttonsColor,
                       fontSize: 26  ,
                     

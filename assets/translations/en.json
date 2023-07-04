@@ -168,5 +168,31 @@
 "بيانات السائق":"Driver Data",
 "اسم السائق":"Driver Name",
 "صورة السيارة":"car picture",
-"كاش": "Cash"
+"كاش": "Cash",
+"تسجيل": "Login",
+"التواصل مع الدعم الفني":"Contact Technical Support",
+
+"اتصال":"Call",
+"سياسة التطبيق":"Application policy",
+"سياسات الاستخدام و الخصوصية و مشاركة البيانات": "Usage, Privacy and Data Sharing Policies",
+"هل تريد تغيير لغة التطبيق  ؟": "Do you want to change the application language?",
+"تغيير اللغة":"Change Language"
+,"بعض الاعدادات العامة المتعقلة بتجربةاستخدامك للتطبيق  بشكل عام":"Some general settings related to your experience using the application in general",
+
+"مشاركةالتطبيق":"Share the app"
+, "قيم التطبيق":"Rate the app",
+"علي متاجر الابل و القوقل":"On Apple and Google Stores",
+"الاستخدام":"usage",
+"سياسات الاستخدام و الخصوصية":"Usage and privacy policies",
+"هل أنت متأكد أنك تريد حذف الحساب ؟":"Are you sure you want to delete the account?"
+
+,"ادفع الآن": "Pay Now",
+"تأكيد االرحلة ":"Trip Confirmation",
+"اختار طربقة الدفع":"Select Payment Method",
+"تأكيد":"Confirm",
+"تمت عملية الدفع بنجاح":"Successfully Completed ",
+"الدفع باستخدام فيزا/مدى":"Payment with Visa / Mada",
+
+"محفظتي":"My Wallet",
+"payment Trip":"payment Trip"
 }

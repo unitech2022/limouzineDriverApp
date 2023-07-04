@@ -31,14 +31,15 @@ class DrawerWidget extends StatelessWidget {
       width: widthScreen(context) - 70,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
-          topRight:
-              AppModel.lang == "ar" ? Radius.circular(0) : Radius.circular(80),
+        topRight:
+              AppModel.lang == "ar"  ||AppModel.lang == "ur"? Radius.circular(0) : Radius.circular(80),
           bottomRight:
-              AppModel.lang == "ar" ? Radius.circular(0) : Radius.circular(80),
+              AppModel.lang == "ar" || AppModel.lang == "ur" ? Radius.circular(0) : Radius.circular(80),
           topLeft:
               AppModel.lang == "en" ? Radius.circular(0) : Radius.circular(80),
           bottomLeft:
               AppModel.lang == "en" ? Radius.circular(0) : Radius.circular(80),
+        
         ),
         color: Color(0xff0B1B2F),
       ),
@@ -265,41 +266,132 @@ class DrawerWidget extends StatelessWidget {
             Navigator.pushNamed(context, externalTrip);
           },
         ),
+      sizedHeight(25),
+       ItemMenu(
+            text: "محفظتي".tr(),
+            icon: "assets/icons/walet.svg",
+            child: const Texts(
+                title: "",
+                textColor: Color(0xffA5A5A5),
+                fontSize: 16,
+                weight: FontWeight.normal,
+                align: TextAlign.center),
+            onTap: () {
+              pop(context);
+              pushPageRoutName(context, wallet);
+            },
+          ),
+      
         sizedHeight(25),
         ItemMenu(
           text: Strings.lang.tr(),
           icon: "assets/icons/translate.svg",
           child: Texts(
-              title: AppModel.lang == "ar" ? "العربية" : "English",
+              title: AppModel.lang == "ar" ? "العربية" :AppModel.lang == "ur"?"اردو": "English",
               textColor: Color(0xffA5A5A5),
               fontSize: 16,
               weight: FontWeight.normal,
               align: TextAlign.center),
           onTap: () {
-             showMyDialog(
-                context: context,
-                
-                title:AppModel.lang == "ar"
-                    ? "تغيير اللغة"
-                    : "Change Language ?",
-                body: AppModel.lang == "ar"
-                    ? "هل تريد تغيير لغة التطبيق  ؟"
-                    :"Do you want to change the language of the application?",
-                founction: () async {
-                  if (AppModel.lang == "ar") {
-                    AppModel.lang = "en";
-                    context.setLocale(Locale('en'));
-                    await saveData(ApiConstants.langKey, 'en');
-                    pop(context);
-                    Navigator.pushNamed(context, splash);
-                  } else {
-                    AppModel.lang = "ar";
+              showDialog<void>(
+    context: context,
+
+    barrierDismissible: false,
+    // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 20),
+        title: Text(
+           "تغيير اللغة".tr(),
+          style: TextStyle(fontSize: 20, color: buttonsColor),
+        ),
+        content: Container(
+          width: widthScreen(context),
+          child: SingleChildScrollView(
+            child: ListBody(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                        child: Text(
+                      "هل تريد تغيير لغة التطبيق  ؟".tr(),
+                      style: TextStyle(fontSize: 20, color: Colors.black),
+                      textAlign: TextAlign.center,
+                    )),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+        actions: <Widget>[
+          Row(
+            children: [   Expanded(
+              child: GestureDetector(
+                onTap: () async{
+                  AppModel.lang = "ar";
                     context.setLocale(Locale('ar'));
                     await saveData(ApiConstants.langKey, 'ar');
                     pop(context);
                     Navigator.pushNamed(context, splash);
-                  }
-                });
+                },
+                child: Center(
+                  child: Text("العربية".tr(),
+                      style: TextStyle(fontSize: 16, color: homeColor)),
+                ),
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () async{
+                  AppModel.lang = "en";
+                    context.setLocale(Locale('en'));
+                    await saveData(ApiConstants.langKey, 'en');
+                    pop(context);
+                    Navigator.pushNamed(context, splash);
+                },
+                child: Center(
+                  child: Text("English".tr(),
+                      style: TextStyle(fontSize: 16, color: homeColor)),
+                ),
+              ),
+            ),
+        
+         Expanded(
+              child: GestureDetector(
+                onTap: () async{
+                AppModel.lang = "ur";
+                    context.setLocale(Locale('ur'));
+                    await saveData(ApiConstants.langKey, 'ur');
+                    pop(context);
+                    Navigator.pushNamed(context, splash);
+                },
+                child: Center(
+                  child: Text("اردو".tr(),
+                      style: TextStyle(fontSize: 16, color: homeColor)),
+                ),
+              ),
+            ),
+         
+          SizedBox(width: 20,),
+          MaterialButton(
+             padding: EdgeInsets.zero,
+            color: Colors.red,
+            child: Text(Strings.cancle.tr(),
+                style: TextStyle(fontSize: 14, color: Colors.white)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+       ],
+          )
+        ],
+      );
+    },
+  );
+          
+          
           },
         ),
         sizedHeight(25),
@@ -439,7 +531,7 @@ class DrawerWidget extends StatelessWidget {
               height: 10,
             ),
             Texts(
-                title: Strings.help,
+                title: Strings.help.tr(),
                 textColor: buttonsColor,
                 fontSize: 16,
                 weight: FontWeight.bold,
@@ -522,7 +614,7 @@ class DrawerWidget extends StatelessWidget {
                               height: 20,
                             ),
                             Texts(
-                                title: Strings.call,
+                                title: Strings.call.tr(),
                                 textColor: buttonsColor,
                                 fontSize: 16,
                                 weight: FontWeight.bold,
